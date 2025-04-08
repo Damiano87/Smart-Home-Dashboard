@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  email     String   @unique
+  image     String?
+  homes     Home[]
+  createdAt DateTime @default(now())
+}
+
+model Home {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  location  String?
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @db.ObjectId
+  rooms     Room[]
+  createdAt DateTime @default(now())
+}
+
+model Room {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  floor   Int?
+  area    Float?
+  home    Home     @relation(fields: [homeId], references: [id])
+  homeId  String   @db.ObjectId
+  devices Device[]
+}
+
+model Device {
+  id       String        @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  type     String // np. temperature_sensor, light, motion_sensor
+  status   String // online/offline
+  isActive Boolean       @default(true)
+  lastSeen DateTime
+  room     Room          @relation(fields: [roomId], references: [id])
+  roomId   String        @db.ObjectId
+  data     SensorData[]
+  events   DeviceEvent[]
+}
+
+model SensorData {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  timestamp   DateTime @default(now())
+  device      Device   @relation(fields: [deviceId], references: [id])
+  deviceId    String   @db.ObjectId
+  temperature Float?
+  humidity    Float?
+  co2         Int?
+  power       Float?
+}
+
+model DeviceEvent {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  device    Device   @relation(fields: [deviceId], references: [id])
+  deviceId  String   @db.ObjectId
+  timestamp DateTime @default(now())
+  type      String // e.g., motion_detected, turned_on
+  details   Json?
+}
