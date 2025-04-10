@@ -10,9 +10,11 @@
     "seed": "ts-node --project tsconfig.seed.json prisma/seed.ts"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.8.0",
     "@prisma/client": "^6.5.0",
     "mongodb": "^6.15.0",
     "next": "15.2.4",
+    "next-auth": "^4.24.11",
     "prisma": "^6.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
