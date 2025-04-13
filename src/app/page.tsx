@@ -1,21 +1,24 @@
-import Image from "next/image";
-import styles from "./page.module.scss";
-import { getUsers } from "./actions/userActions";
+import { SignOut } from "./components/SignOut/SignOut";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export default async function Home() {
-  const { data, error } = await getUsers();
+const Page = async () => {
+  const session = await auth();
 
-  if (error) {
-    return <div>There was an error...</div>;
-  }
+  console.log(session);
+
+  if (!session) redirect("/sign-in");
 
   return (
-    <div>
-      {data?.map((user, index) => (
-        <h1 key={index} className={styles.name}>
-          {user.name}
-        </h1>
-      ))}
-    </div>
+    <>
+      <div className="bg-gray-100 rounded-lg p-4 text-center mb-6">
+        <p className="text-gray-600">Signed in as:</p>
+        <p className="font-medium">{session.user?.email}</p>
+      </div>
+
+      <SignOut />
+    </>
   );
-}
+};
+
+export default Page;

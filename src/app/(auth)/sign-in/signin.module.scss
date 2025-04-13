@@ -1,0 +1,75 @@
+.signinContainer {
+  width: 100%;
+  max-width: 24rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+  border: 2px solid #ccc;
+}
+
+.signinTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.divider {
+  position: relative;
+}
+
+.dividerLine {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+}
+
+.dividerBorder {
+  width: 100%;
+  border-top: 1px solid #ccc;
+}
+
+.dividerText {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  font-size: 0.875rem;
+}
+
+.dividerLabel {
+  background-color: white;
+  padding: 0 0.5rem;
+  color: #6b7280;
+}
+
+.signinForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fullHeight {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fullWidth {
+  width: 100%;
+  padding-block: 4px;
+  cursor: pointer;
+}
+
+.signupLink {
+  text-align: center;
+}
+
+.input {
+  padding-block: 4px;
+  padding-inline: 7px;
+}
