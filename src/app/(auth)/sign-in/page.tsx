@@ -1,14 +1,16 @@
 import { auth } from "@/lib/auth";
-import { signIn } from "@/lib/auth";
 import { GithubSignIn } from "../../components/GithubSignIn/GithubSignIn";
-import { executeAction } from "../../../lib/executeAction";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import styles from "./signin.module.scss";
 import { GoogleSignIn } from "@/app/components/GoogleSignIn/GoogleSignIn";
+import SignInForm from "./components/SignInForm";
 
 const Page = async () => {
   const session = await auth();
+
+  console.log(session);
+
   if (session) redirect("/");
 
   return (
@@ -27,39 +29,7 @@ const Page = async () => {
             <span className={styles.dividerLabel}>Or continue with email</span>
           </div>
         </div>
-
-        <form
-          className={styles.signinForm}
-          action={async (formData) => {
-            "use server";
-            await executeAction({
-              actionFn: async () => {
-                await signIn("credentials", formData);
-              },
-            });
-          }}
-        >
-          <input
-            name="email"
-            placeholder="Email"
-            type="email"
-            required
-            autoComplete="email"
-            className={styles.input}
-          />
-          <input
-            name="password"
-            placeholder="Password"
-            type="password"
-            required
-            autoComplete="current-password"
-            className={styles.input}
-          />
-          <button className={styles.fullWidth} type="submit">
-            Sign In
-          </button>
-        </form>
-
+        <SignInForm />
         <div className={styles.signupLink}>
           <Link href="/sign-up">Don&apos;t have an account? Sign up</Link>
         </div>

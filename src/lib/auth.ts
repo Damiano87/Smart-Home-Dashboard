@@ -30,9 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           },
         });
 
-        if (!user) {
-          throw new Error("Email not found.");
-        }
+        if (!user) return null;
 
         // check if password is correct
         const passwordMatch = await compare(
@@ -40,9 +38,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           user.password as string
         );
 
-        if (!passwordMatch) {
-          throw new Error("Incorrect password");
-        }
+        if (!passwordMatch) return null;
 
         return user;
       },

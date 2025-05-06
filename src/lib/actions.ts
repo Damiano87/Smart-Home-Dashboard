@@ -1,7 +1,11 @@
+"use server";
+
 import { schema } from "@/lib/schema";
 import { prisma } from "./prisma";
 import { executeAction } from "./executeAction";
 import bcrypt from "bcrypt";
+import { signIn } from "./auth";
+import { redirect } from "next/navigation";
 
 const signUp = async (formData: FormData) => {
   return executeAction({
@@ -20,4 +24,33 @@ const signUp = async (formData: FormData) => {
   });
 };
 
-export { signUp };
+const signInWithCredentials = async (_: any, formData: FormData) => {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  try {
+    const res = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    console.log(res);
+
+    if (!res?.ok) {
+      return {
+        success: false,
+        error:
+          res?.error === "CredentialsSignin"
+            ? "Nieprawidłowy email lub hasło."
+            : "Wystąpił nieoczekiwany błąd.",
+      };
+    }
+
+    redirect("/");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { signUp, signInWithCredentials };
