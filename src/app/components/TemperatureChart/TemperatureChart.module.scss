@@ -95,8 +95,7 @@ $yellow-800: #92400e;
 
   &:focus {
     outline: none;
-    ring: 2px;
-    ring-color: $primary-blue;
+    box-shadow: 0 0 0 2px $primary-blue;
     border-color: $primary-blue;
   }
 
@@ -112,7 +111,7 @@ $yellow-800: #92400e;
 }
 
 // Stats grid
-.statsGrid {
+.statGrid {
   margin-top: 1.5rem;
   display: grid;
   grid-template-columns: 1fr;
@@ -123,7 +122,7 @@ $yellow-800: #92400e;
   }
 }
 
-.statsCard {
+.statCard {
   padding: 1rem;
   border-radius: 0.5rem;
 

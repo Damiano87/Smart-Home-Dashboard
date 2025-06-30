@@ -84,7 +84,7 @@ const TemperatureChart = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.loadingHeader}>
+      <div className={styles.header}>
         <h2 className={styles.title}>Monitorowanie Temperatury - Smart Home</h2>
         <p className={styles.subtitle}>
           Wykres temperatury z ostatnich 24 godzin dla wszystkich czujników w
@@ -95,6 +95,7 @@ const TemperatureChart = () => {
       <div className={styles.filters}>
         <div className={styles.filtersRow}>
           <span className={styles.filtersLabel}>Filtry:</span>
+          {/* select room */}
           <select
             value={selectedDevice}
             onChange={(e) => setSelectedDevice(e.target.value)}
@@ -177,11 +178,11 @@ const TemperatureChart = () => {
         </ResponsiveContainer>
       </div>
 
-      <div className={styles.statsGrid}>
-        <div className={{ ...statCardStyle, ...statCardBlueStyle }}>
-          <div className={statCardContentStyle}>
-            <span className={statCardLabelBlueStyle}>Salon</span>
-            <span className={statCardValueBlueStyle}>
+      <div className={styles.statGrid}>
+        <div className={`${styles.statCard} ${styles.statCardBlue}`}>
+          <div className={styles.statCardContent}>
+            <span className={styles.statCardLabel}>Salon</span>
+            <span className={styles.statCardValue}>
               {temperatureData.length > 0
                 ? `${temperatureData[temperatureData.length - 1].salon.toFixed(
                     1
@@ -189,13 +190,13 @@ const TemperatureChart = () => {
                 : "--°C"}
             </span>
           </div>
-          <p className={statCardDescriptionBlueStyle}>Ostatni odczyt</p>
+          <p className={styles.statCardDescription}>Ostatni odczyt</p>
         </div>
 
-        <div className={{ ...statCardStyle, ...statCardGreenStyle }}>
-          <div className={statCardContentStyle}>
-            <span className={statCardLabelGreenStyle}>Sypialnia</span>
-            <span className={statCardValueGreenStyle}>
+        <div className={`${styles.statCard} ${styles.statCardGreen}`}>
+          <div className={styles.statCardContent}>
+            <span className={styles.statCardLabel}>Sypialnia</span>
+            <span className={styles.statCardValue}>
               {temperatureData.length > 0
                 ? `${temperatureData[
                     temperatureData.length - 1
@@ -203,13 +204,13 @@ const TemperatureChart = () => {
                 : "--°C"}
             </span>
           </div>
-          <p className={statCardDescriptionGreenStyle}>Ostatni odczyt</p>
+          <p className={styles.statCardDescription}>Ostatni odczyt</p>
         </div>
 
-        <div className={{ ...statCardStyle, ...statCardYellowStyle }}>
-          <div className={statCardContentStyle}>
-            <span className={statCardLabelYellowStyle}>Kuchnia</span>
-            <span className={statCardValueYellowStyle}>
+        <div className={`${styles.statCard} ${styles.statCardYellow}`}>
+          <div className={styles.statCardContent}>
+            <span className={styles.statCardLabel}>Kuchnia</span>
+            <span className={styles.statCardValue}>
               {temperatureData.length > 0
                 ? `${temperatureData[
                     temperatureData.length - 1
@@ -217,7 +218,7 @@ const TemperatureChart = () => {
                 : "--°C"}
             </span>
           </div>
-          <p className={statCardDescriptionYellowStyle}>Ostatni odczyt</p>
+          <p className={styles.statCardDescription}>Ostatni odczyt</p>
         </div>
       </div>
     </div>
