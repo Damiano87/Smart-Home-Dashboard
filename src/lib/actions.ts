@@ -53,4 +53,30 @@ const signInWithCredentials = async (_: any, formData: FormData) => {
   }
 };
 
-export { signUp, signInWithCredentials };
+// get temperature data from last 24 hours
+const getLast24hTemperatureData = async () => {
+  const data = await prisma.sensorData.findMany({
+    where: {
+      // timestamp: {
+      //   gte: new Date(Date.now() - 24 * 60 * 60 * 1000), // last 24h
+      // },
+      device: {
+        type: "temperature_sensor",
+      },
+    },
+    include: {
+      device: {
+        include: {
+          room: true,
+        },
+      },
+    },
+    orderBy: {
+      timestamp: "asc",
+    },
+  });
+
+  return data;
+};
+
+export { signUp, signInWithCredentials, getLast24hTemperatureData };
