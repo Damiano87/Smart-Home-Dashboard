@@ -6,6 +6,7 @@ import { executeAction } from "./executeAction";
 import bcrypt from "bcrypt";
 import { signIn } from "./auth";
 import { redirect } from "next/navigation";
+import { RoomType } from "@/types/types";
 
 const signUp = async (formData: FormData) => {
   return executeAction({
@@ -53,30 +54,95 @@ const signInWithCredentials = async (_: any, formData: FormData) => {
   }
 };
 
-// get temperature data from last 24 hours
-const getLast24hTemperatureData = async () => {
-  const data = await prisma.sensorData.findMany({
-    where: {
-      // timestamp: {
-      //   gte: new Date(Date.now() - 24 * 60 * 60 * 1000), // last 24h
-      // },
-      device: {
-        type: "temperature_sensor",
-      },
-    },
-    include: {
-      device: {
-        include: {
-          room: true,
+const getTemperatureDataByRoom = async (roomType: RoomType) => {
+  try {
+    const baseQuery = {
+      where: {
+        device: {
+          type: "temperature_sensor",
+          ...(roomType !== "all" && {
+            room: {
+              name: {
+                equals: roomType,
+                mode: "insensitive" as const,
+              },
+            },
+          }),
         },
       },
-    },
-    orderBy: {
-      timestamp: "asc",
-    },
-  });
+      include: {
+        device: {
+          include: {
+            room: true,
+          },
+        },
+      },
+      orderBy: {
+        timestamp: "asc" as const,
+      },
+    };
 
-  return data;
+    const data = await prisma.sensorData.findMany(baseQuery);
+    return data;
+  } catch (error) {
+    console.error("Error fetching temperature data:", error);
+    return { success: false, error: "Nie udało się pobrać danych temperatury" };
+  }
 };
 
-export { signUp, signInWithCredentials, getLast24hTemperatureData };
+// get last 24 hours
+const getLast24hTemperatureDataByRoom = async (roomType: RoomType) => {
+  try {
+    const twentyFourHoursAgo = new Date();
+    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+
+    const baseQuery = {
+      where: {
+        timestamp: {
+          gte: twentyFourHoursAgo,
+        },
+        device: {
+          type: "temperature_sensor",
+          ...(roomType !== "all" && {
+            room: {
+              name: {
+                equals: roomType,
+                mode: "insensitive" as const,
+              },
+            },
+          }),
+        },
+      },
+      include: {
+        device: {
+          include: {
+            room: true,
+          },
+        },
+      },
+      orderBy: {
+        timestamp: "asc" as const,
+      },
+    };
+
+    const data = await prisma.sensorData.findMany(baseQuery);
+    return { success: true, data };
+  } catch (error) {
+    console.error("Error fetching last 24h temperature data:", error);
+    return {
+      success: false,
+      error: "Nie udało się pobrać danych temperatury z ostatnich 24h",
+    };
+  }
+};
+
+export {
+  signUp,
+  signInWithCredentials,
+  getTemperatureDataByRoom,
+  getLast24hTemperatureDataByRoom,
+};
+
+// timestamp: {
+//   gte: new Date(Date.now() - 24 * 60 * 60 * 1000), // last 24h
+// },
