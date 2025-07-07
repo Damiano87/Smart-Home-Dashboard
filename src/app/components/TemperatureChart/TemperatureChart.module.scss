@@ -1,7 +1,12 @@
 // Variables
+$widget-bg: #1f2e2c;
+$widget-title-bg: #1f2e2c;
+$primary-text: #e7f9f7;
 $primary-blue: #3b82f6;
 $primary-green: #10b981;
-$primary-yellow: #f59e0b;
+$primary-yellow: #f5dc71;
+$secondary-text: #8de2db;
+$accent-color: #abd006;
 $gray-50: #f9fafb;
 $gray-100: #f3f4f6;
 $gray-200: #e5e7eb;
@@ -16,8 +21,8 @@ $green-50: #ecfdf5;
 $green-600: #059669;
 $green-800: #065f46;
 $yellow-50: #fffbeb;
-$yellow-600: #d97706;
-$yellow-800: #92400e;
+$yellow-600: #f5dc71;
+$yellow-800: #f5dc71;
 
 // Mixins
 @mixin card-shadow {
@@ -45,9 +50,14 @@ $yellow-800: #92400e;
   // max-width: 72rem;
   margin: 0 auto;
   padding: 1.5rem;
-  background-color: white;
+  background-color: $widget-bg;
   border-radius: 0.5rem;
   @include card-shadow;
+}
+
+.container:hover {
+  transform: translateY(-5);
+  transition: all 0.3s;
 }
 
 // Header section
@@ -58,13 +68,13 @@ $yellow-800: #92400e;
 .title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: $gray-800;
+  color: $primary-text;
   margin-bottom: 0.5rem;
   line-height: 1.25;
 }
 
 .subtitle {
-  color: $gray-600;
+  color: $secondary-text;
   line-height: 1.5;
 }
 
@@ -106,7 +116,7 @@ $yellow-800: #92400e;
 
 // Chart container
 .chartContainer {
-  height: 24rem;
+  height: 14rem;
   width: 100%;
 }
 

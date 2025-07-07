@@ -6,7 +6,7 @@ import { executeAction } from "./executeAction";
 import bcrypt from "bcrypt";
 import { signIn } from "./auth";
 import { redirect } from "next/navigation";
-import { RoomType } from "@/types/types";
+import { ApiResponse, RoomType, TempSensorData } from "@/types/types";
 
 const signUp = async (formData: FormData) => {
   return executeAction({
@@ -54,7 +54,9 @@ const signInWithCredentials = async (_: any, formData: FormData) => {
   }
 };
 
-const getTemperatureDataByRoom = async (roomType: RoomType) => {
+const getTemperatureDataByRoom = async (
+  roomType: RoomType
+): Promise<ApiResponse<TempSensorData[]>> => {
   try {
     const baseQuery = {
       where: {
@@ -83,7 +85,10 @@ const getTemperatureDataByRoom = async (roomType: RoomType) => {
     };
 
     const data = await prisma.sensorData.findMany(baseQuery);
-    return data;
+    return {
+      success: true,
+      data: data,
+    };
   } catch (error) {
     console.error("Error fetching temperature data:", error);
     return { success: false, error: "Nie udało się pobrać danych temperatury" };

@@ -1,13 +1,9 @@
 "use client";
 
-import { RoomType } from "@/types/types";
 import { useRouter, useSearchParams } from "next/navigation";
+import styles from "./RoomSelect.module.scss";
 
-export default function RoomSelector({
-  selectedRoom,
-}: {
-  selectedRoom: RoomType;
-}) {
+export default function RoomSelector() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -24,12 +20,15 @@ export default function RoomSelector({
 
   return (
     <form>
-      <label htmlFor="room">Wybierz pokój: </label>
+      <label htmlFor="room" className={styles.label}>
+        Wybierz pokój:{" "}
+      </label>
       <select
         id="room"
         name="room"
-        value={selectedRoom}
+        value={searchParams.get("room") ?? "all"}
         onChange={handleChange}
+        className={styles.select}
       >
         <option value="all">Wszystkie</option>
         <option value="salon">Salon</option>

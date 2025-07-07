@@ -1,9 +1,14 @@
 import { SignOut } from "./components/SignOut/SignOut";
 import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import TemperatureChart from "./components/TemperatureChart/TemperatureChart";
+import { RoomType } from "@/types/types";
 
-const Page = async () => {
+const Page = async ({
+  searchParams,
+}: {
+  searchParams?: { room?: RoomType };
+}) => {
+  const selectedRoom = searchParams?.room ?? "all";
   // const session = await auth();
 
   // console.log(session);
@@ -12,7 +17,7 @@ const Page = async () => {
 
   return (
     <>
-      <TemperatureChart />
+      <TemperatureChart selectedRoom={selectedRoom} />
     </>
   );
 };

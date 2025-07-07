@@ -15,9 +15,37 @@ export interface TemperatureData {
 
 export type RoomType = "all" | "salon" | "kuchnia" | "sypialnia";
 
-export const ROOM_OPTIONS = [
-  { value: "all" as const, label: "Wszystkie pomieszczenia" },
-  { value: "salon" as const, label: "Salon" },
-  { value: "kuchnia" as const, label: "Kuchnia" },
-  { value: "sypialnia" as const, label: "Sypialnia" },
-] as const;
+// temperature sensor data types
+export type TempSensorData = {
+  co2: number | null;
+  device: Device;
+  deviceId: string;
+  humidity: number | null;
+  id: string;
+  power: number | null;
+  temperature: number | null;
+  timestamp: Date;
+};
+
+type Device = {
+  id: string;
+  isActive: boolean;
+  lastSeen: Date;
+  name: string;
+  room: Room;
+  roomId: string;
+  status: string;
+  type: string;
+};
+
+type Room = {
+  area: number | null;
+  floor: number | null;
+  homeId: string;
+  id: string;
+  name: string;
+};
+
+export type ApiResponse<T> =
+  | { success: true; data: T }
+  | { success: false; error: string };

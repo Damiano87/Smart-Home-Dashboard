@@ -13,11 +13,12 @@ import {
 import styles from "./TemperatureChart.module.scss";
 import { useMemo } from "react";
 import { processTemperatureData } from "@/utils/functions";
+import { TempSensorData } from "@/types/types";
 
 export default function TemperatureChartClient({
   rawData,
 }: {
-  rawData: any[];
+  rawData: TempSensorData[];
 }) {
   console.log(rawData);
 
@@ -54,12 +55,13 @@ export default function TemperatureChartClient({
               };
               return [`${value?.toFixed(1)}°C`, deviceNames[name] || name];
             }}
+            wrapperStyle={{ backgroundColor: "#171F12" }}
           />
           <Legend />
           <Line
             type="monotone"
             dataKey="salon"
-            stroke="#3b82f6"
+            stroke="#2BABA1"
             strokeWidth={2}
             dot={{ r: 3 }}
             name="Salon"
@@ -67,7 +69,7 @@ export default function TemperatureChartClient({
           <Line
             type="monotone"
             dataKey="sypialnia"
-            stroke="#10b981"
+            stroke="#ABD006"
             strokeWidth={2}
             dot={{ r: 3 }}
             name="Sypialnia"
@@ -75,7 +77,7 @@ export default function TemperatureChartClient({
           <Line
             type="monotone"
             dataKey="kuchnia"
-            stroke="#f59e0b"
+            stroke="#F5DC71"
             strokeWidth={2}
             dot={{ r: 3 }}
             name="Kuchnia"

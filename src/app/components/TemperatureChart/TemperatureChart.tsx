@@ -5,12 +5,19 @@ import { RoomType } from "@/types/types";
 import { getTemperatureDataByRoom } from "@/lib/actions";
 
 export default async function TemperatureChart({
-  searchParams,
+  selectedRoom,
 }: {
-  searchParams?: { room?: RoomType };
+  selectedRoom: RoomType;
 }) {
-  const selectedRoom = searchParams?.room ?? "all";
   const rawData = await getTemperatureDataByRoom(selectedRoom);
+
+  if (!rawData.success) {
+    return (
+      <div className={styles.container}>
+        <div>Błąd: {rawData.error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -21,22 +28,9 @@ export default async function TemperatureChart({
           domu
         </p>
       </div>
-      <RoomSelect selectedRoom={selectedRoom} />
+      <RoomSelect />
       {/* render client chart */}
-      <TemperatureChartClient rawData={rawData} />
+      <TemperatureChartClient rawData={rawData.data} />
     </div>
   );
 }
-
-// const [temperatureData, setTemperatureData] = useState<TemperatureData[]>([]);
-
-// const handleDataChange = (data: TemperatureData[]) => {
-//   setTemperatureData(data);
-//   console.log("Nowe dane temperatury:", data);
-// };
-
-/* <RoomSelect
-        onDataChange={handleDataChange}
-        use24hData={false}
-        className="mb-6"
-      /> */

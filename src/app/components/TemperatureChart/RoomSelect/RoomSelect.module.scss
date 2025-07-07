@@ -174,16 +174,16 @@
 // Dark mode support (optional)
 @media (prefers-color-scheme: dark) {
   .label {
-    color: #e5e7eb;
+    color: #8de2db;
   }
 
   .select {
-    background-color: #374151;
-    border-color: #4b5563;
-    color: #e5e7eb;
+    background-color: #171f12;
+    border-color: #171f12;
+    color: #8de2db;
 
     &:focus {
-      border-color: #60a5fa;
+      border-color: #86a305;
       box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
     }
 

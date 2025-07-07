@@ -1,5 +1,7 @@
+import { TempSensorData } from "@/types/types";
+
 // convert raw temperature data to data suitable for the chart
-export const processTemperatureData = (rawData: any[]) => {
+export const processTemperatureData = (rawData: TempSensorData[]) => {
   // group data by timestamp
   const groupedByTime = rawData.reduce((acc, item) => {
     const timeKey = new Date(item.timestamp).toLocaleTimeString("pl-PL", {
