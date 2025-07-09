@@ -2,7 +2,7 @@ import TemperatureChartClient from "./TemperatureChartClient";
 import styles from "./TemperatureChart.module.scss";
 import RoomSelect from "./RoomSelect/RoomSelect";
 import { RoomType } from "@/types/types";
-import { getTemperatureDataByRoom } from "@/lib/actions";
+import { getTemperatureDataByRoom } from "./actions";
 import "../../globals.scss";
 
 export default async function TemperatureChart({
@@ -10,6 +10,7 @@ export default async function TemperatureChart({
 }: {
   selectedRoom: RoomType;
 }) {
+  await new Promise((resolve) => setTimeout(resolve, 5000));
   const rawData = await getTemperatureDataByRoom(selectedRoom);
 
   if (!rawData.success) {

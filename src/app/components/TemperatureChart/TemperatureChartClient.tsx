@@ -20,8 +20,6 @@ export default function TemperatureChartClient({
 }: {
   rawData: TempSensorData[];
 }) {
-  console.log(rawData);
-
   // process data only when rawData changes
   const processedData = useMemo(() => {
     if (!rawData || rawData.length === 0) return [];

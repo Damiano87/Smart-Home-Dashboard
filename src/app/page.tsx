@@ -2,7 +2,10 @@ import { SignOut } from "./components/SignOut/SignOut";
 import { auth } from "@/lib/auth";
 import TemperatureChart from "./components/TemperatureChart/TemperatureChart";
 import { RoomType } from "@/types/types";
-import DeviceTypesPieChart from "./components/DeviceTypeChart/DeviceTypeChart";
+import DeviceTypeChart from "./components/DeviceTypeChart/DeviceTypeChart";
+import Skeleton from "./components/Skeleton/Skeleton";
+import { Suspense } from "react";
+import styles from "./page.module.scss";
 
 const Page = async ({
   searchParams,
@@ -18,10 +21,14 @@ const Page = async ({
   // if (!session) redirect("/sign-in");
 
   return (
-    <>
-      <TemperatureChart selectedRoom={selectedRoom} />
-      <DeviceTypesPieChart />
-    </>
+    <div className={styles.mainGrid}>
+      <Suspense fallback={<Skeleton />}>
+        <TemperatureChart selectedRoom={selectedRoom} />
+      </Suspense>
+      <Suspense fallback={<Skeleton />}>
+        <DeviceTypeChart />
+      </Suspense>
+    </div>
   );
 };
 

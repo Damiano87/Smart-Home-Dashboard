@@ -31,3 +31,9 @@ export const processTemperatureData = (rawData: TempSensorData[]) => {
       new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
 };
+
+// rename device types
+export const renameDeviceType = (name: string) => {
+  if (name === "temperature_sensor") return "Temperature sensor";
+  if (name === "motion_sensor") return "Motion sensor";
+};
