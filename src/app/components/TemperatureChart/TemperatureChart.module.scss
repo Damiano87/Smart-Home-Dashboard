@@ -1,28 +1,4 @@
-// Variables
-$widget-bg: #1f2e2c;
-$widget-title-bg: #1f2e2c;
-$primary-text: #e7f9f7;
-$primary-blue: #3b82f6;
-$primary-green: #10b981;
-$primary-yellow: #f5dc71;
-$secondary-text: #8de2db;
-$accent-color: #abd006;
-$gray-50: #f9fafb;
-$gray-100: #f3f4f6;
-$gray-200: #e5e7eb;
-$gray-300: #d1d5db;
-$gray-600: #4b5563;
-$gray-700: #374151;
-$gray-800: #1f2937;
-$blue-50: #eff6ff;
-$blue-600: #2563eb;
-$blue-800: #1e40af;
-$green-50: #ecfdf5;
-$green-600: #059669;
-$green-800: #065f46;
-$yellow-50: #fffbeb;
-$yellow-600: #f5dc71;
-$yellow-800: #f5dc71;
+@use "../../../styles/variables.scss" as vars;
 
 // Mixins
 @mixin card-shadow {
@@ -44,22 +20,6 @@ $yellow-800: #f5dc71;
   }
 }
 
-// Main container
-.container {
-  width: 100%;
-  // max-width: 72rem;
-  margin: 0 auto;
-  padding: 1.5rem;
-  background-color: $widget-bg;
-  border-radius: 0.5rem;
-  @include card-shadow;
-}
-
-.container:hover {
-  transform: translateY(-5);
-  transition: all 0.3s;
-}
-
 // Header section
 .header {
   margin-bottom: 1.5rem;
@@ -68,13 +28,13 @@ $yellow-800: #f5dc71;
 .title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: $primary-text;
+  color: vars.$primary-text;
   margin-bottom: 0.5rem;
   line-height: 1.25;
 }
 
 .subtitle {
-  color: $secondary-text;
+  color: vars.$secondary-text;
   line-height: 1.5;
 }
 
@@ -92,32 +52,26 @@ $yellow-800: #f5dc71;
 .filtersLabel {
   font-size: 0.875rem;
   font-weight: 500;
-  color: $gray-700;
+  color: vars.$gray-700;
 }
 
 .select {
   padding: 0.5rem 0.75rem;
-  border: 1px solid $gray-300;
+  border: 1px solid vars.$gray-300;
   border-radius: 0.375rem;
   background-color: white;
   font-size: 0.875rem;
-  color: $gray-700;
+  color: vars.$gray-700;
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px $primary-blue;
-    border-color: $primary-blue;
+    box-shadow: 0 0 0 2px vars.$primary-blue;
+    border-color: vars.$primary-blue;
   }
 
   &:hover {
-    border-color: $gray-300;
+    border-color: vars.$gray-300;
   }
-}
-
-// Chart container
-.chartContainer {
-  height: 14rem;
-  width: 100%;
 }
 
 // Stats grid
@@ -137,50 +91,50 @@ $yellow-800: #f5dc71;
   border-radius: 0.5rem;
 
   &Blue {
-    background-color: $blue-50;
+    background-color: vars.$blue-50;
 
     .statCardLabel {
-      color: $blue-800;
+      color: vars.$blue-800;
     }
 
     .statCardValue {
-      color: $blue-600;
+      color: vars.$blue-600;
     }
 
     .statCardDescription {
-      color: $blue-600;
+      color: vars.$blue-600;
     }
   }
 
   &Green {
-    background-color: $green-50;
+    background-color: vars.$green-50;
 
     .statCardLabel {
-      color: $green-800;
+      color: vars.$green-800;
     }
 
     .statCardValue {
-      color: $green-600;
+      color: vars.$green-600;
     }
 
     .statCardDescription {
-      color: $green-600;
+      color: vars.$green-600;
     }
   }
 
   &Yellow {
-    background-color: $yellow-50;
+    background-color: vars.$yellow-50;
 
     .statCardLabel {
-      color: $yellow-800;
+      color: vars.$yellow-800;
     }
 
     .statCardValue {
-      color: $yellow-600;
+      color: vars.$yellow-600;
     }
 
     .statCardDescription {
-      color: $yellow-600;
+      color: vars.$yellow-600;
     }
   }
 }
@@ -213,14 +167,14 @@ $yellow-800: #f5dc71;
 
 .loadingHeader {
   height: 2rem;
-  background-color: $gray-200;
+  background-color: vars.$gray-200;
   border-radius: 0.25rem;
   margin-bottom: 1rem;
 }
 
 .loadingChart {
   height: 16rem;
-  background-color: $gray-200;
+  background-color: vars.$gray-200;
   border-radius: 0.25rem;
 }
 

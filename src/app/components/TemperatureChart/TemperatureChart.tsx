@@ -3,6 +3,7 @@ import styles from "./TemperatureChart.module.scss";
 import RoomSelect from "./RoomSelect/RoomSelect";
 import { RoomType } from "@/types/types";
 import { getTemperatureDataByRoom } from "@/lib/actions";
+import "../../globals.scss";
 
 export default async function TemperatureChart({
   selectedRoom,
@@ -13,14 +14,14 @@ export default async function TemperatureChart({
 
   if (!rawData.success) {
     return (
-      <div className={styles.container}>
+      <div className="container">
         <div>Błąd: {rawData.error}</div>
       </div>
     );
   }
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <div className={styles.header}>
         <h2 className={styles.title}>Monitorowanie Temperatury - Smart Home</h2>
         <p className={styles.subtitle}>

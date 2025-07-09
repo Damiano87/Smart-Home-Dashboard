@@ -10,10 +10,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import styles from "./TemperatureChart.module.scss";
 import { useMemo } from "react";
 import { processTemperatureData } from "@/utils/functions";
 import { TempSensorData } from "@/types/types";
+import "../../globals.scss";
 
 export default function TemperatureChartClient({
   rawData,
@@ -29,7 +29,7 @@ export default function TemperatureChartClient({
   }, [rawData]);
 
   return (
-    <div className={styles.chartContainer}>
+    <div className="chartContainer">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={processedData}
@@ -55,7 +55,7 @@ export default function TemperatureChartClient({
               };
               return [`${value?.toFixed(1)}°C`, deviceNames[name] || name];
             }}
-            wrapperStyle={{ backgroundColor: "#171F12" }}
+            contentStyle={{ backgroundColor: "#171F12" }}
           />
           <Legend />
           <Line
