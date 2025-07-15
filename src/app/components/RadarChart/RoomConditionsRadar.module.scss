@@ -1,0 +1,217 @@
+// RoomConditionsRadar.module.scss
+
+// Zmienne
+$primary-color: #1f2937;
+$secondary-color: #6b7280;
+$background-color: #ffffff;
+$shadow-color: rgba(0, 0, 0, 0.1);
+$border-radius: 0.5rem;
+$transition: all 0.3s ease;
+
+// Mixiny
+@mixin card-shadow {
+  box-shadow: 0 4px 6px -1px $shadow-color, 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+@mixin hover-shadow {
+  box-shadow: 0 10px 15px -3px $shadow-color, 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+// Główny kontener
+.chartContainer {
+  width: 100%;
+  height: 24rem;
+  background-color: $background-color;
+  border-radius: $border-radius;
+  padding: 1.5rem;
+  transition: $transition;
+  @include card-shadow;
+  position: relative;
+
+  &:hover {
+    @include hover-shadow;
+    transform: translateY(-2px);
+  }
+
+  // Responsive design
+  @media (max-width: 768px) {
+    height: 20rem;
+    padding: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    height: 18rem;
+    padding: 0.75rem;
+  }
+}
+
+// Nagłówek wykresu
+.chartTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: $primary-color;
+  text-align: center;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3rem;
+    height: 2px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    border-radius: 1px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.125rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+}
+
+// Kontener wykresu
+.chartWrapper {
+  width: 100%;
+  height: calc(100% - 3rem);
+  position: relative;
+  min-height: 250px;
+}
+
+// Loading spinner
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Customowe style dla legendy
+.radarLegend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  .legendItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: $secondary-color;
+    transition: $transition;
+
+    &:hover {
+      color: $primary-color;
+      transform: scale(1.05);
+    }
+
+    .legendColor {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+
+    .legendItem {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+// Responsywne dopasowanie wysokości
+@media (max-width: 1024px) {
+  .chartContainer {
+    height: 22rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .chartContainer {
+    height: 20rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .chartContainer {
+    height: 18rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chartContainer {
+    height: 16rem;
+  }
+}
+
+// Ciemny motyw
+@media (prefers-color-scheme: dark) {
+  .chartContainer {
+    background-color: #1f2937;
+    color: #f9fafb;
+  }
+
+  .chartTitle {
+    color: #f9fafb;
+  }
+
+  .radarLegend {
+    .legendItem {
+      color: #d1d5db;
+
+      &:hover {
+        color: #f9fafb;
+      }
+    }
+  }
+}
+
+// Accessibility
+.chartContainer {
+  &:focus-within {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+}
+
+// Print styles
+@media print {
+  .chartContainer {
+    box-shadow: none;
+    border: 1px solid #e5e7eb;
+    break-inside: avoid;
+  }
+}

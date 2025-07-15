@@ -61,7 +61,7 @@ export default function TemperatureChartClient({
             dataKey="salon"
             stroke="#2BABA1"
             strokeWidth={2}
-            dot={{ r: 3 }}
+            dot={{ r: 1 }}
             name="Salon"
           />
           <Line
@@ -69,7 +69,7 @@ export default function TemperatureChartClient({
             dataKey="sypialnia"
             stroke="#ABD006"
             strokeWidth={2}
-            dot={{ r: 3 }}
+            dot={{ r: 1 }}
             name="Sypialnia"
           />
           <Line
@@ -77,7 +77,7 @@ export default function TemperatureChartClient({
             dataKey="kuchnia"
             stroke="#F5DC71"
             strokeWidth={2}
-            dot={{ r: 3 }}
+            dot={{ r: 1 }}
             name="Kuchnia"
           />
         </LineChart>

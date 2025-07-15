@@ -6,6 +6,7 @@ import DeviceTypeChart from "./components/DeviceTypeChart/DeviceTypeChart";
 import Skeleton from "./components/Skeleton/Skeleton";
 import { Suspense } from "react";
 import styles from "./page.module.scss";
+import RadarChart from "./components/RadarChart/RadarChart";
 
 const Page = async ({
   searchParams,
@@ -27,6 +28,9 @@ const Page = async ({
       </Suspense>
       <Suspense fallback={<Skeleton />}>
         <DeviceTypeChart />
+      </Suspense>
+      <Suspense fallback={<Skeleton />}>
+        <RadarChart />
       </Suspense>
     </div>
   );

@@ -124,6 +124,8 @@ model SensorData {
   humidity    Float?
   co2         Int?
   power       Float?
+  airQuality  Int?
+  noiseLevel  Int?
 }
 
 model DeviceEvent {
