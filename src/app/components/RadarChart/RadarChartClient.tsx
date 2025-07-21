@@ -11,6 +11,7 @@ import {
   Legend,
 } from "recharts";
 import styles from "./RoomConditionsRadar.module.scss";
+import { TempSensorData } from "@/types/types";
 
 const ROOM_CONDITIONS_DATA = [
   {
@@ -60,10 +61,15 @@ const normalizeData = (data) => {
   }));
 };
 
-const RoomConditionsRadar = () => {
+const RoomConditionsRadar = ({
+  radarData,
+}: {
+  radarData: TempSensorData[];
+}) => {
   const [normalizedData, setNormalizedData] = useState([]);
 
-  // Hydration fix - renderuj wykres dopiero po zamontowaniu komponentu
+  console.log(radarData);
+
   useEffect(() => {
     setNormalizedData(normalizeData(ROOM_CONDITIONS_DATA));
   }, []);

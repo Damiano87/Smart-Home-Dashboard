@@ -1,31 +1,39 @@
 import { prisma } from "@/lib/prisma";
+import { TempSensorData } from "@/types/types";
 
-export const getRadarChartData = async () => {
+export async function getRadarChartData(): Promise<TempSensorData[]> {
   try {
-    const baseQuery = {
-      include: {
-        device: {
+    // get all unique deviceIds
+    const uniqueDeviceIds = await prisma.sensorData.findMany({
+      select: { deviceId: true },
+      distinct: ["deviceId"],
+    });
+
+    // for each deviceId get unique document
+    const latestDocuments = await Promise.all(
+      uniqueDeviceIds.map(async ({ deviceId }) => {
+        return await prisma.sensorData.findFirst({
+          where: { deviceId },
           include: {
-            room: {
+            device: {
               select: {
-                name: true,
+                room: {
+                  select: {
+                    name: true,
+                  },
+                },
               },
             },
           },
-        },
-      },
-      orderBy: {
-        timestamp: "asc" as const,
-      },
-    };
+          orderBy: { timestamp: "desc" },
+        });
+      })
+    );
 
-    const data = await prisma.sensorData.findMany(baseQuery);
-    return {
-      success: true,
-      data: data,
-    };
+    // filter out null values (if exist)
+    return latestDocuments.filter((doc) => doc !== null) as TempSensorData[];
   } catch (error) {
-    console.error("Error fetching radar chart data:", error);
-    return { success: false, error: "Failed fetching radar chart data" };
+    console.error("Error fetching latest documents:", error);
+    throw new Error("Failed to fetch latest documents for each device");
   }
-};
+}

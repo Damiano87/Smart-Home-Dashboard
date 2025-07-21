@@ -25,6 +25,8 @@ export type TempSensorData = {
   power: number | null;
   temperature: number | null;
   timestamp: Date;
+  airQuality: number;
+  noiseLevel: number;
 };
 
 type Device = {
