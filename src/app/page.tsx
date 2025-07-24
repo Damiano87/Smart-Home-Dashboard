@@ -7,6 +7,7 @@ import Skeleton from "./components/Skeleton/Skeleton";
 import { Suspense } from "react";
 import styles from "./page.module.scss";
 import RadarChart from "./components/RadarChart/RadarChart";
+import EnergyConsumptionChart from "./components/EnergyConsumptionChart/EnergyConsChart";
 
 const Page = async ({
   searchParams,
@@ -32,6 +33,7 @@ const Page = async ({
       <Suspense fallback={<Skeleton />}>
         <RadarChart />
       </Suspense>
+      <EnergyConsumptionChart />
     </div>
   );
 };

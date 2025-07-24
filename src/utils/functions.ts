@@ -37,3 +37,10 @@ export const renameDeviceType = (name: string) => {
   if (name === "temperature_sensor") return "Temperature sensor";
   if (name === "motion_sensor") return "Motion sensor";
 };
+
+// rename room names
+export const renameRoom = (name: string) => {
+  if (name === "Salon") return "Living room";
+  if (name === "Kuchnia") return "Kitchen";
+  if (name === "Sypialnia") return "Bedroom";
+};

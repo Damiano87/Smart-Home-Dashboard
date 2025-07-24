@@ -12,53 +12,20 @@ import {
 } from "recharts";
 import styles from "./RoomConditionsRadar.module.scss";
 import { TempSensorData } from "@/types/types";
+import { renameRoom } from "@/utils/functions";
+import "../../globals.scss";
 
-const ROOM_CONDITIONS_DATA = [
-  {
-    metric: "Temperatura",
-    salon: 22,
-    sypialnia: 20,
-    kuchnia: 25,
-    maxValue: 30,
-  },
-  {
-    metric: "Wilgotność",
-    salon: 45,
-    sypialnia: 40,
-    kuchnia: 60,
-    maxValue: 80,
-  },
-  {
-    metric: "CO2",
-    salon: 420,
-    sypialnia: 380,
-    kuchnia: 500,
-    maxValue: 1000,
-  },
-  {
-    metric: "Jakość powietrza",
-    salon: 85,
-    sypialnia: 90,
-    kuchnia: 75,
-    maxValue: 100,
-  },
-  {
-    metric: "Poziom hałasu",
-    salon: 35,
-    sypialnia: 25,
-    kuchnia: 45,
-    maxValue: 70,
-  },
-];
-
-// normalize data function
-const normalizeData = (data) => {
-  return data.map((item) => ({
-    metric: item.metric,
-    salon: Math.round((item.salon / item.maxValue) * 100),
-    sypialnia: Math.round((item.sypialnia / item.maxValue) * 100),
-    kuchnia: Math.round((item.kuchnia / item.maxValue) * 100),
-  }));
+// generate colors
+const generateColor = (index: number) => {
+  const colors = [
+    "#2baba1",
+    "#fcff66",
+    "#86a305",
+    "#abd006",
+    "#d6f5f2",
+    "#18b87e",
+  ];
+  return colors[index % colors.length];
 };
 
 const RoomConditionsRadar = ({
@@ -66,17 +33,122 @@ const RoomConditionsRadar = ({
 }: {
   radarData: TempSensorData[];
 }) => {
-  const [normalizedData, setNormalizedData] = useState([]);
+  const [normalizedData, setNormalizedData] = useState<
+    Array<{ [key: string]: number | string }>
+  >([]);
+  const [roomsConfig, setRoomsConfig] = useState<
+    Array<{ [key: string]: string }>
+  >([]);
 
   console.log(radarData);
 
   useEffect(() => {
-    setNormalizedData(normalizeData(ROOM_CONDITIONS_DATA));
-  }, []);
+    if (!radarData || radarData.length === 0) return;
+
+    // get room names
+    const rooms = radarData.map((room) => {
+      return room.device.room.name;
+    });
+
+    // create room configuration dynamicly
+    const roomsConfiguration = rooms.map((room, index) => ({
+      name: room.charAt(0).toUpperCase() + room.slice(1), // capitalize first letter
+      dataKey: room.toLowerCase(),
+      color: generateColor(index),
+    }));
+
+    // get air quality values
+    const airQualities = radarData.map((item) => {
+      return item.airQuality;
+    });
+
+    // get temperature values
+    const temperatures = radarData
+      .map((item) => item.temperature)
+      .filter((temp): temp is number => temp !== null);
+
+    // get temperature values
+    const humidities = radarData
+      .map((item) => item.humidity)
+      .filter((hum): hum is number => hum !== null);
+    // get co2 values
+    const co2 = radarData
+      .map((item) => item.co2)
+      .filter((co2): co2 is number => co2 !== null);
+
+    // get noise level values
+    const noiseLevels = radarData
+      .map((item) => item.noiseLevel)
+      .filter((noise): noise is number => noise !== null);
+
+    // create air quality object
+    const airQualityData = Object.fromEntries(
+      rooms.map((room, index) => [
+        room.toLowerCase(),
+        parseFloat(airQualities[index]?.toFixed(1)),
+      ])
+    );
+
+    // create temperature object
+    const temperatureData = Object.fromEntries(
+      rooms.map((room, index) => [
+        room.toLowerCase(),
+        parseFloat(temperatures[index].toFixed(1)),
+      ])
+    );
+
+    // create humidity object
+    const humidityData = Object.fromEntries(
+      rooms.map((room, index) => [
+        room.toLowerCase(),
+        parseFloat(humidities[index]?.toFixed(1)),
+      ])
+    );
+
+    // create co2 object
+    const co2Data = Object.fromEntries(
+      rooms.map((room, index) => [
+        room.toLowerCase(),
+        parseFloat(co2[index]?.toFixed(1)),
+      ])
+    );
+
+    // create noise level object
+    const noiseLevelData = Object.fromEntries(
+      rooms.map((room, index) => [
+        room.toLowerCase(),
+        parseFloat(noiseLevels[index]?.toFixed(1)),
+      ])
+    );
+
+    const combinedData = [
+      airQualityData,
+      temperatureData,
+      humidityData,
+      co2Data,
+      noiseLevelData,
+    ];
+
+    const metrics = [
+      "Air quality",
+      "Temperature",
+      "Humidity",
+      "Co2",
+      "Noise level",
+    ];
+
+    const dataWithMetrics = combinedData.map((item, index) => ({
+      ...item,
+      metric: metrics[index],
+    }));
+    console.log(dataWithMetrics);
+    setNormalizedData(dataWithMetrics);
+    setRoomsConfig(roomsConfiguration);
+  }, [radarData]);
 
   return (
-    <div className={styles.chartContainer}>
-      <h2 className={styles.chartTitle}>Porównanie warunków w pokojach</h2>
+    <div className="container">
+      <h2 className="chartTitle">Porównanie warunków w pokojach</h2>
       <div className={styles.chartWrapper}>
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart
@@ -91,30 +163,17 @@ const RoomConditionsRadar = ({
               tick={{ fontSize: 10 }}
               tickCount={5}
             />
-            <Radar
-              name="Salon"
-              dataKey="salon"
-              stroke="#8884d8"
-              fill="#8884d8"
-              fillOpacity={0.3}
-              strokeWidth={2}
-            />
-            <Radar
-              name="Sypialnia"
-              dataKey="sypialnia"
-              stroke="#82ca9d"
-              fill="#82ca9d"
-              fillOpacity={0.3}
-              strokeWidth={2}
-            />
-            <Radar
-              name="Kuchnia"
-              dataKey="kuchnia"
-              stroke="#ffc658"
-              fill="#ffc658"
-              fillOpacity={0.3}
-              strokeWidth={2}
-            />
+            {roomsConfig.map((room) => (
+              <Radar
+                key={room.dataKey}
+                name={renameRoom(room.name)}
+                dataKey={room.dataKey}
+                stroke={room.color}
+                fill={room.color}
+                fillOpacity={0.3}
+                strokeWidth={2}
+              />
+            ))}
             <Legend />
           </RadarChart>
         </ResponsiveContainer>
@@ -124,15 +183,3 @@ const RoomConditionsRadar = ({
 };
 
 export default RoomConditionsRadar;
-
-// Nie renderuj nic podczas SSR
-//   if (!isClient) {
-//     return (
-//       <div className={styles.chartContainer}>
-//         <h2 className={styles.chartTitle}>Porównanie warunków w pokojach</h2>
-//         <div className={styles.loadingContainer}>
-//           <div className={styles.spinner}></div>
-//         </div>
-//       </div>
-//     );
-//   }

@@ -1,6 +1,4 @@
-// RoomConditionsRadar.module.scss
-
-// Zmienne
+// variables
 $primary-color: #1f2937;
 $secondary-color: #6b7280;
 $background-color: #ffffff;
@@ -8,7 +6,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
 $border-radius: 0.5rem;
 $transition: all 0.3s ease;
 
-// Mixiny
+// Mixins
 @mixin card-shadow {
   box-shadow: 0 4px 6px -1px $shadow-color, 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
