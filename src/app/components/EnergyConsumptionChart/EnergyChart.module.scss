@@ -1,6 +1,6 @@
-// EnergyConsumptionChart.module.scss
+@use "../../../styles/variables.scss" as vars;
 
-// Zmienne
+// variables
 $primary-color: #1f2937;
 $secondary-color: #6b7280;
 $tertiary-color: #9ca3af;
@@ -12,7 +12,7 @@ $transition: all 0.3s ease;
 $gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 $gradient-secondary: linear-gradient(90deg, #3b82f6, #8b5cf6);
 
-// Mixiny
+// mixins
 @mixin card-shadow {
   box-shadow: 0 4px 6px -1px $shadow-color, 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
@@ -28,28 +28,17 @@ $gradient-secondary: linear-gradient(90deg, #3b82f6, #8b5cf6);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-// Główny kontener
+// main container
 .chartContainer {
   width: 100%;
-  height: 28rem;
-  background: $background-color;
-  border-radius: $border-radius;
+  height: 100%;
+  background: vars.$widget-bg;
+  border-radius: vars.$border-radius;
   padding: 2rem;
   position: relative;
   transition: $transition;
   @include card-shadow;
   overflow: hidden;
-
-  // Dekoracyjny gradient na górze
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: $gradient-secondary;
-  }
 
   &:hover {
     @include hover-shadow;
@@ -73,39 +62,17 @@ $gradient-secondary: linear-gradient(90deg, #3b82f6, #8b5cf6);
   margin-bottom: 1.5rem;
 }
 
-.chartTitle {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: $primary-color;
-  margin-bottom: 0.5rem;
-  background: $gradient-primary;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-
-  @media (max-width: 768px) {
-    font-size: 1.25rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1.125rem;
-  }
-}
-
-.chartSubtitle {
-  font-size: 0.875rem;
-  color: $secondary-color;
-  font-weight: 500;
-  opacity: 0.8;
-}
-
-// Kontener wykresu
+// chart wrapper
 .chartWrapper {
   width: 100%;
   height: calc(100% - 5rem);
   position: relative;
   border-radius: $border-radius-sm;
-  background: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%);
+  background: linear-gradient(
+    145deg,
+    vars.$widget-bg 0%,
+    vars.$widget-title-bg 100%
+  );
   padding: 1rem;
 
   @media (max-width: 768px) {
@@ -114,41 +81,10 @@ $gradient-secondary: linear-gradient(90deg, #3b82f6, #8b5cf6);
   }
 }
 
-// Loading spinner
-.loadingContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.spinner {
-  width: 3rem;
-  height: 3rem;
-  border: 3px solid rgba(59, 130, 246, 0.1);
-  border-top: 3px solid #3b82f6;
-  border-radius: 50%;
-  animation: spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-// Customowy tooltip
+// Custom tooltip
 .customTooltip {
   @include glass-effect;
-  border-radius: $border-radius-sm;
+  border-radius: vars.$border-radius;
   padding: 1rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   min-width: 200px;
@@ -172,7 +108,7 @@ $gradient-secondary: linear-gradient(90deg, #3b82f6, #8b5cf6);
 
 .tooltipTotal {
   font-weight: 700;
-  color: #3b82f6;
+  color: vars.$accent-color;
   font-size: 0.875rem;
   background: linear-gradient(90deg, #3b82f6, #8b5cf6);
   -webkit-background-clip: text;
@@ -211,7 +147,7 @@ $gradient-secondary: linear-gradient(90deg, #3b82f6, #8b5cf6);
   color: $primary-color;
 }
 
-// Customowa legenda
+// custom legend
 .customLegend {
   display: flex;
   justify-content: center;
@@ -290,7 +226,7 @@ $gradient-secondary: linear-gradient(90deg, #3b82f6, #8b5cf6);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-// Responsywne dopasowanie wysokości
+// responsive height adjustment
 @media (max-width: 1024px) {
   .chartContainer {
     height: 26rem;
@@ -315,38 +251,42 @@ $gradient-secondary: linear-gradient(90deg, #3b82f6, #8b5cf6);
   }
 }
 
-// Ciemny motyw
+// dark mode
 @media (prefers-color-scheme: dark) {
   .chartContainer {
-    background-color: #1f2937;
-    color: #f9fafb;
+    background-color: vars.$widget-bg;
+    color: vars.$primary-text;
   }
 
   .chartTitle {
-    color: #f9fafb;
+    color: vars.$primary-text;
   }
 
   .chartSubtitle {
-    color: #d1d5db;
+    color: vars.$secondary-text;
   }
 
   .chartWrapper {
-    background: linear-gradient(145deg, #374151 0%, #1f2937 100%);
+    background: linear-gradient(
+      145deg,
+      vars.$widget-bg 0%,
+      vars.$widget-title-bg 100%
+    );
   }
 
   .customTooltip {
-    background: rgba(31, 41, 55, 0.95);
+    background: vars.$dashboard-bg;
     border-color: #374151;
-    color: #f9fafb;
+    color: vars.$primary-text;
   }
 
   .tooltipTime,
   .tooltipValue {
-    color: #f9fafb;
+    color: vars.$primary-text;
   }
 
   .tooltipLabel {
-    color: #d1d5db;
+    color: vars.$primary-text;
   }
 
   .customLegend {
@@ -373,7 +313,7 @@ $gradient-secondary: linear-gradient(90deg, #3b82f6, #8b5cf6);
   }
 }
 
-// Accessibility
+// accessibility
 .chartContainer {
   &:focus-within {
     outline: 2px solid #3b82f6;
@@ -388,7 +328,7 @@ $gradient-secondary: linear-gradient(90deg, #3b82f6, #8b5cf6);
   }
 }
 
-// Print styles
+// print styles
 @media print {
   .chartContainer {
     box-shadow: none;
@@ -406,7 +346,7 @@ $gradient-secondary: linear-gradient(90deg, #3b82f6, #8b5cf6);
   }
 }
 
-// Animacje dla obszarów wykresu
+// animation for chart area
 .recharts-area {
   transition: $transition;
 

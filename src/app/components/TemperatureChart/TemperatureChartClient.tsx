@@ -16,15 +16,17 @@ import { TempSensorData } from "@/types/types";
 import "../../globals.scss";
 
 export default function TemperatureChartClient({
-  rawData,
+  data,
 }: {
-  rawData: TempSensorData[];
+  data: TempSensorData[];
 }) {
-  // process data only when rawData changes
+  // process data only when data changes
   const processedData = useMemo(() => {
-    if (!rawData || rawData.length === 0) return [];
-    return processTemperatureData(rawData);
-  }, [rawData]);
+    if (!data || data.length === 0) return [];
+    return processTemperatureData(data);
+  }, [data]);
+
+  console.log(processedData);
 
   return (
     <div className="chartContainer">
@@ -62,7 +64,7 @@ export default function TemperatureChartClient({
             stroke="#2BABA1"
             strokeWidth={2}
             dot={{ r: 1 }}
-            name="Salon"
+            name="Living room"
           />
           <Line
             type="monotone"
@@ -70,7 +72,7 @@ export default function TemperatureChartClient({
             stroke="#ABD006"
             strokeWidth={2}
             dot={{ r: 1 }}
-            name="Sypialnia"
+            name="Bedroom"
           />
           <Line
             type="monotone"
@@ -78,7 +80,7 @@ export default function TemperatureChartClient({
             stroke="#F5DC71"
             strokeWidth={2}
             dot={{ r: 1 }}
-            name="Kuchnia"
+            name="Kitchen"
           />
         </LineChart>
       </ResponsiveContainer>

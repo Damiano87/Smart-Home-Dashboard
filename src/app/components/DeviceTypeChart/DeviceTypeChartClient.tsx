@@ -90,9 +90,9 @@ const DeviceTypesPieChart = ({ deviceData }: Props) => {
   };
 
   return (
-    <div className={styles.chartContainer}>
-      <h2 className={styles.chartTitle}>Rozkład urządzeń według typów</h2>
-      <div className={styles.chartWrapper}>
+    <div className="container">
+      <h2 className="chartTitle">Types of devices</h2>
+      <div className="chartContainer">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie

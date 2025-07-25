@@ -28,11 +28,7 @@ const generateColor = (index: number) => {
   return colors[index % colors.length];
 };
 
-const RoomConditionsRadar = ({
-  radarData,
-}: {
-  radarData: TempSensorData[];
-}) => {
+const RoomConditionsRadar = ({ data }: { data: TempSensorData[] }) => {
   const [normalizedData, setNormalizedData] = useState<
     Array<{ [key: string]: number | string }>
   >([]);
@@ -40,13 +36,11 @@ const RoomConditionsRadar = ({
     Array<{ [key: string]: string }>
   >([]);
 
-  console.log(radarData);
-
   useEffect(() => {
-    if (!radarData || radarData.length === 0) return;
+    if (!data || data.length === 0) return;
 
     // get room names
-    const rooms = radarData.map((room) => {
+    const rooms = data.map((room) => {
       return room.device.room.name;
     });
 
@@ -58,26 +52,26 @@ const RoomConditionsRadar = ({
     }));
 
     // get air quality values
-    const airQualities = radarData.map((item) => {
+    const airQualities = data.map((item) => {
       return item.airQuality;
     });
 
     // get temperature values
-    const temperatures = radarData
+    const temperatures = data
       .map((item) => item.temperature)
       .filter((temp): temp is number => temp !== null);
 
     // get temperature values
-    const humidities = radarData
+    const humidities = data
       .map((item) => item.humidity)
       .filter((hum): hum is number => hum !== null);
     // get co2 values
-    const co2 = radarData
+    const co2 = data
       .map((item) => item.co2)
       .filter((co2): co2 is number => co2 !== null);
 
     // get noise level values
-    const noiseLevels = radarData
+    const noiseLevels = data
       .map((item) => item.noiseLevel)
       .filter((noise): noise is number => noise !== null);
 
@@ -141,26 +135,29 @@ const RoomConditionsRadar = ({
       ...item,
       metric: metrics[index],
     }));
-    console.log(dataWithMetrics);
     setNormalizedData(dataWithMetrics);
     setRoomsConfig(roomsConfiguration);
-  }, [radarData]);
+  }, [data]);
 
   return (
     <div className="container">
-      <h2 className="chartTitle">Porównanie warunków w pokojach</h2>
-      <div className={styles.chartWrapper}>
+      <h2 className="chartTitle">Compare room conditions</h2>
+      <div className="chartContainer">
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart
             data={normalizedData}
             margin={{ top: 20, right: 30, bottom: 20, left: 30 }}
           >
             <PolarGrid />
-            <PolarAngleAxis dataKey="metric" tick={{ fontSize: 12 }} />
+            <PolarAngleAxis
+              dataKey="metric"
+              tick={{ fontSize: 12 }}
+              tickSize={15}
+            />
             <PolarRadiusAxis
               angle={90}
               domain={[0, 100]}
-              tick={{ fontSize: 10 }}
+              tick={{ fontSize: 9 }}
               tickCount={5}
             />
             {roomsConfig.map((room) => (

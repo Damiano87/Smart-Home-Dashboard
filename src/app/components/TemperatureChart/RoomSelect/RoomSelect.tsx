@@ -21,7 +21,7 @@ export default function RoomSelector() {
   return (
     <form>
       <label htmlFor="room" className={styles.label}>
-        Wybierz pokój:{" "}
+        Choose room:{" "}
       </label>
       <select
         id="room"
@@ -30,10 +30,10 @@ export default function RoomSelector() {
         onChange={handleChange}
         className={styles.select}
       >
-        <option value="all">Wszystkie</option>
-        <option value="salon">Salon</option>
-        <option value="kuchnia">Kuchnia</option>
-        <option value="sypialnia">Sypialnia</option>
+        <option value="all">All</option>
+        <option value="salon">Living room</option>
+        <option value="kuchnia">Kitchen</option>
+        <option value="sypialnia">Bedroom</option>
       </select>
     </form>
   );

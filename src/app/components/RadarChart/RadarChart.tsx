@@ -1,9 +1,9 @@
+import DynamicClientWrapper from "../DynamicClientWrapper";
 import { getRadarChartData } from "./actions";
-import RoomConditionsRadar from "./RadarChartClient";
 
 const RadarChart = async () => {
   const radarData = await getRadarChartData();
 
-  return <RoomConditionsRadar radarData={radarData} />;
+  return <DynamicClientWrapper data={radarData} componentName="RadarChart" />;
 };
 export default RadarChart;

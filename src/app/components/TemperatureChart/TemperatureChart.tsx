@@ -1,16 +1,15 @@
 import TemperatureChartClient from "./TemperatureChartClient";
 import styles from "./TemperatureChart.module.scss";
-import RoomSelect from "./RoomSelect/RoomSelect";
 import { RoomType } from "@/types/types";
 import { getTemperatureDataByRoom } from "./actions";
 import "../../globals.scss";
+import DynamicClientWrapper from "../DynamicClientWrapper";
 
 export default async function TemperatureChart({
   selectedRoom,
 }: {
   selectedRoom: RoomType;
 }) {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
   const rawData = await getTemperatureDataByRoom(selectedRoom);
 
   if (!rawData.success) {
@@ -24,15 +23,13 @@ export default async function TemperatureChart({
   return (
     <div className="container">
       <div className={styles.header}>
-        <h2 className={styles.title}>Monitorowanie Temperatury - Smart Home</h2>
-        <p className={styles.subtitle}>
-          Wykres temperatury z ostatnich 24 godzin dla wszystkich czujników w
-          domu
-        </p>
+        <h2 className="chartTitle">Temperature monitor</h2>
+        <p className="chartSubtitle">Last 24 hours</p>
       </div>
-      <RoomSelect />
+      {/* render room select component */}
+      <DynamicClientWrapper data={rawData} componentName="RoomSelect" />
       {/* render client chart */}
-      <TemperatureChartClient rawData={rawData.data} />
+      <TemperatureChartClient data={rawData.data} />
     </div>
   );
 }

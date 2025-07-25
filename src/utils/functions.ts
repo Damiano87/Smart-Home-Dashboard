@@ -39,7 +39,7 @@ export const renameDeviceType = (name: string) => {
 };
 
 // rename room names
-export const renameRoom = (name: string) => {
+export const renameRoom = (name: string | undefined) => {
   if (name === "Salon") return "Living room";
   if (name === "Kuchnia") return "Kitchen";
   if (name === "Sypialnia") return "Bedroom";
