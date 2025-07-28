@@ -3,22 +3,14 @@ import styles from "./TemperatureChart.module.scss";
 import { RoomType } from "@/types/types";
 import { getTemperatureDataByRoom } from "./actions";
 import "../../globals.scss";
-import DynamicClientWrapper from "../DynamicClientWrapper";
+import RoomSelector from "./RoomSelect/RoomSelect";
 
 export default async function TemperatureChart({
   selectedRoom,
 }: {
   selectedRoom: RoomType;
 }) {
-  const rawData = await getTemperatureDataByRoom(selectedRoom);
-
-  if (!rawData.success) {
-    return (
-      <div className="container">
-        <div>Błąd: {rawData.error}</div>
-      </div>
-    );
-  }
+  const tempData = getTemperatureDataByRoom(selectedRoom);
 
   return (
     <div className="container">
@@ -27,9 +19,9 @@ export default async function TemperatureChart({
         <p className="chartSubtitle">Last 24 hours</p>
       </div>
       {/* render room select component */}
-      <DynamicClientWrapper data={rawData} componentName="RoomSelect" />
+      <RoomSelector />
       {/* render client chart */}
-      <TemperatureChartClient data={rawData.data} />
+      <TemperatureChartClient tempData={tempData} />
     </div>
   );
 }

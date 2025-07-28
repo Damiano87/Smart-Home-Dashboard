@@ -2,20 +2,36 @@ import { SignOut } from "./components/SignOut/SignOut";
 import { auth } from "@/lib/auth";
 import TemperatureChart from "./components/TemperatureChart/TemperatureChart";
 import { RoomType } from "@/types/types";
-import DeviceTypeChart from "./components/DeviceTypeChart/DeviceTypeChart";
 import Skeleton from "./components/Skeleton/Skeleton";
 import { Suspense } from "react";
 import styles from "./page.module.scss";
-import RadarChart from "./components/RadarChart/RadarChart";
-import EnergyCons from "./components/EnergyConsumptionChart/EnergyCons";
+import { getDeviceTypeDistribution } from "./components/DeviceTypeChart/actions";
+import DeviceTypesPieChart from "./components/DeviceTypeChart/DeviceTypeChartClient";
+import { getRadarChartData } from "./components/RadarChart/actions";
+import RoomConditionsRadar from "./components/RadarChart/RadarChartClient";
+import { getEnergyConsumptionData } from "./components/EnergyConsumptionChart/actions";
+import EnergyConsumptionChart from "./components/EnergyConsumptionChart/EnergyConsChart";
+import EnergyConsumptionWidget from "./components/EnergyConsumptionWidget/EnergyConsumptionWidget";
+import DeviceStatusWidget from "./components/EnergyConsumptionWidget/DeviceStatusWidget/DeviceStatusWidget";
 
 const Page = async ({
   searchParams,
 }: {
   searchParams?: Promise<{ room?: RoomType }>;
 }) => {
+  // get search params for select
   const resolvedSearchParams = await searchParams;
   const selectedRoom = resolvedSearchParams?.room ?? "all";
+
+  // get device types from database
+  const deviceData = getDeviceTypeDistribution();
+
+  // get radar chart data
+  const radarData = getRadarChartData();
+
+  // get energy consumption data
+  const energyConsumptionData = getEnergyConsumptionData();
+
   // const session = await auth();
 
   // console.log(session);
@@ -28,13 +44,19 @@ const Page = async ({
         <TemperatureChart selectedRoom={selectedRoom} />
       </Suspense>
       <Suspense fallback={<Skeleton />}>
-        <DeviceTypeChart />
+        <DeviceTypesPieChart deviceData={deviceData} />
       </Suspense>
       <Suspense fallback={<Skeleton />}>
-        <RadarChart />
+        <RoomConditionsRadar radarData={radarData} />
       </Suspense>
       <Suspense fallback={<Skeleton />}>
-        <EnergyCons />
+        <EnergyConsumptionChart consumptionData={energyConsumptionData} />
+      </Suspense>
+      <Suspense fallback={<Skeleton />}>
+        <EnergyConsumptionWidget />
+      </Suspense>
+      <Suspense fallback={<Skeleton />}>
+        <DeviceStatusWidget />
       </Suspense>
     </div>
   );

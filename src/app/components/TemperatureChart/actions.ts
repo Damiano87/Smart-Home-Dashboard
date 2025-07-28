@@ -36,7 +36,7 @@ export const getTemperatureDataByRoom = async (
     const data = await prisma.sensorData.findMany(baseQuery);
     return {
       success: true,
-      data: data,
+      data,
     };
   } catch (error) {
     console.error("Error fetching temperature data:", error);

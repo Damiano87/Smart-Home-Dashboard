@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import {
   PieChart,
   Pie,
@@ -19,7 +19,14 @@ type Props = {
 
 const COLORS = ["#abd006", "#2baba1", "#d6f5f2", "#fcff66", "#18b87e"] as const;
 
-const DeviceTypesPieChart = ({ deviceData }: Props) => {
+const DeviceTypesPieChart = ({
+  deviceData,
+}: {
+  deviceData: Promise<Props>;
+}) => {
+  // use promise
+  const data = use(deviceData);
+
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const renderCustomizedLabel = ({
@@ -96,7 +103,7 @@ const DeviceTypesPieChart = ({ deviceData }: Props) => {
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
-              data={deviceData}
+              data={data}
               cx="50%"
               cy="50%"
               labelLine={false}
@@ -107,7 +114,7 @@ const DeviceTypesPieChart = ({ deviceData }: Props) => {
               onMouseEnter={onPieEnter}
               onMouseLeave={onPieLeave}
             >
-              {deviceData.map((entry, index) => (
+              {data.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import {
   AreaChart,
   Area,
@@ -20,10 +20,6 @@ type EnergyData = {
   [roomName: string]: string | number;
 };
 
-type EnergyConsumptionChartProps = {
-  data?: EnergyData[];
-};
-
 // room colors
 const DEFAULT_ROOM_COLORS = [
   "#2baba1",
@@ -33,8 +29,14 @@ const DEFAULT_ROOM_COLORS = [
   "#18b87e",
 ];
 
-const EnergyConsumptionChart = ({ data = [] }: EnergyConsumptionChartProps) => {
-  const [isClient, setIsClient] = useState(false);
+const EnergyConsumptionChart = ({
+  consumptionData,
+}: {
+  consumptionData: Promise<EnergyData[]>;
+}) => {
+  // use promise
+  const data = use(consumptionData);
+
   const [chartData, setChartData] = useState<EnergyData[]>([]);
   const [availableRooms, setAvailableRooms] = useState<string[]>([]);
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
@@ -42,8 +44,6 @@ const EnergyConsumptionChart = ({ data = [] }: EnergyConsumptionChartProps) => {
   const [roomNames, setRoomNames] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    setIsClient(true);
-
     if (data && data.length > 0) {
       // get rooms from data
       const rooms = new Set<string>();

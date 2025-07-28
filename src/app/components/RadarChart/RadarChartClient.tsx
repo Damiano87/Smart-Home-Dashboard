@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import {
   RadarChart,
   PolarGrid,
@@ -10,7 +10,6 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import styles from "./RoomConditionsRadar.module.scss";
 import { TempSensorData } from "@/types/types";
 import { renameRoom } from "@/utils/functions";
 import "../../globals.scss";
@@ -28,7 +27,14 @@ const generateColor = (index: number) => {
   return colors[index % colors.length];
 };
 
-const RoomConditionsRadar = ({ data }: { data: TempSensorData[] }) => {
+const RoomConditionsRadar = ({
+  radarData,
+}: {
+  radarData: Promise<TempSensorData[]>;
+}) => {
+  // use promise
+  const data = use(radarData);
+
   const [normalizedData, setNormalizedData] = useState<
     Array<{ [key: string]: number | string }>
   >([]);
@@ -44,7 +50,7 @@ const RoomConditionsRadar = ({ data }: { data: TempSensorData[] }) => {
       return room.device.room.name;
     });
 
-    // create room configuration dynamicly
+    // create room configuration dynamicaly
     const roomsConfiguration = rooms.map((room, index) => ({
       name: room.charAt(0).toUpperCase() + room.slice(1), // capitalize first letter
       dataKey: room.toLowerCase(),

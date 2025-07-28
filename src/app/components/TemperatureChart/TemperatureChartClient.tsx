@@ -10,23 +10,36 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { useMemo } from "react";
+import { use, useMemo } from "react";
 import { processTemperatureData } from "@/utils/functions";
 import { TempSensorData } from "@/types/types";
 import "../../globals.scss";
 
-export default function TemperatureChartClient({
-  data,
-}: {
+type Temp = {
   data: TempSensorData[];
+};
+
+export default function TemperatureChartClient({
+  tempData,
+}: {
+  tempData: Promise<Temp>;
 }) {
+  // use promise
+  const data = use(tempData);
+
   // process data only when data changes
   const processedData = useMemo(() => {
-    if (!data || data.length === 0) return [];
-    return processTemperatureData(data);
+    if (!data.data || data.data.length === 0) return [];
+    return processTemperatureData(data.data);
   }, [data]);
 
-  console.log(processedData);
+  if (!data.success) {
+    return (
+      <div className="container">
+        <div className="error">Błąd: {data.error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="chartContainer">

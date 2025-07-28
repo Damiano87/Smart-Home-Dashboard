@@ -13,6 +13,7 @@
     "@auth/prisma-adapter": "^2.8.0",
     "@prisma/client": "^6.6.0",
     "bcrypt": "^5.1.1",
+    "lucide-react": "^0.528.0",
     "mongodb": "^6.15.0",
     "next": "15.2.4",
     "next-auth": "^5.0.0-beta.25",
