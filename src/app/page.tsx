@@ -12,7 +12,8 @@ import RoomConditionsRadar from "./components/RadarChart/RadarChartClient";
 import { getEnergyConsumptionData } from "./components/EnergyConsumptionChart/actions";
 import EnergyConsumptionChart from "./components/EnergyConsumptionChart/EnergyConsChart";
 import EnergyConsumptionWidget from "./components/EnergyConsumptionWidget/EnergyConsumptionWidget";
-import DeviceStatusWidget from "./components/EnergyConsumptionWidget/DeviceStatusWidget/DeviceStatusWidget";
+import DeviceStatusWidget from "./components/DeviceStatusWidget/DeviceStatusWidget";
+import TemperatureWidget from "./components/TemperatureWidget/TemperatureWidget";
 
 const Page = async ({
   searchParams,
@@ -57,6 +58,9 @@ const Page = async ({
       </Suspense>
       <Suspense fallback={<Skeleton />}>
         <DeviceStatusWidget />
+      </Suspense>
+      <Suspense fallback={<Skeleton />}>
+        <TemperatureWidget />
       </Suspense>
     </div>
   );

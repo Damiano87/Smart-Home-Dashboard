@@ -1,5 +1,5 @@
 import { getDeviceStatus, DeviceStatus } from "./actions";
-import styles from "../../../../styles/WidgetBase.module.scss";
+import styles from "../../../styles/WidgetBase.module.scss";
 import { Wifi, WifiOff, Smartphone } from "lucide-react";
 
 export default async function DeviceStatusWidget() {
@@ -21,13 +21,13 @@ export default async function DeviceStatusWidget() {
         <div className={styles.summary}>
           <div className={styles.totalDevices}>
             <span className={styles.totalValue}>{data.total}</span>
-            <span className={styles.totalLabel}>urządzeń</span>
+            <span className={styles.totalLabel}> urządzeń</span>
           </div>
           <div className={styles.percentage}>
             <span className={styles.percentageValue}>
               {Math.round(onlinePercentage)}%
             </span>
-            <span className={styles.percentageLabel}>online</span>
+            <span className={styles.percentageLabel}> online</span>
           </div>
         </div>
 
