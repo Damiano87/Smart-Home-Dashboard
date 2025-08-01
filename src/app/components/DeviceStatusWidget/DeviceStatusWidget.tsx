@@ -14,14 +14,14 @@ export default async function DeviceStatusWidget() {
         <div className={styles.iconContainer}>
           <Smartphone className={styles.icon} />
         </div>
-        <h3 className={styles.title}>Status Urządzeń</h3>
+        <h3 className={styles.title}>Device status</h3>
       </div>
 
       <div className={styles.content}>
         <div className={styles.summary}>
           <div className={styles.totalDevices}>
             <span className={styles.totalValue}>{data.total}</span>
-            <span className={styles.totalLabel}> urządzeń</span>
+            <span className={styles.totalLabel}> devices</span>
           </div>
           <div className={styles.percentage}>
             <span className={styles.percentageValue}>
