@@ -268,7 +268,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-// temp widget
+// temperature widget
 .temperatureBar {
   position: relative;
   height: 0.5rem;
@@ -287,15 +287,15 @@
   flex: 1;
 
   &[data-temp="cold"] {
-    background-color: vars.$chart5;
+    background-color: vars.$chart1;
   }
 
   &[data-temp="optimal"] {
-    background-color: vars.$semantic-positive;
+    background-color: vars.$chart2;
   }
 
   &[data-temp="warm"] {
-    background-color: vars.$semantic-negative;
+    background-color: red;
   }
 }
 
@@ -340,4 +340,46 @@
   gap: 0.5rem;
   color: vars.$secondary-text;
   font-size: 0.875rem;
+}
+
+// air quality widget
+.qualityBar {
+  position: relative;
+  height: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.qualityScale {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.scaleSegment {
+  flex: 1;
+
+  &[data-quality="good"] {
+    background-color: vars.$chart1;
+  }
+
+  &[data-quality="moderate"] {
+    background-color: vars.$chart2;
+  }
+
+  &[data-quality="poor"] {
+    background-color: red;
+  }
+}
+
+.qualityIndicator {
+  position: absolute;
+  top: -2px;
+  width: 4px;
+  height: calc(100% + 4px);
+  background-color: vars.$primary-text;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: left 0.6s ease-out;
 }
