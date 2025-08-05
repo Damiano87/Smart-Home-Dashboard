@@ -15,6 +15,7 @@ import EnergyConsumptionWidget from "./components/EnergyConsumptionWidget/Energy
 import DeviceStatusWidget from "./components/DeviceStatusWidget/DeviceStatusWidget";
 import TemperatureWidget from "./components/TemperatureWidget/TemperatureWidget";
 import AirQualityWidget from "./components/AirQualityWidget/AirQualityWidget";
+import SecurityStatusWidget from "./components/SecurityStatusWidget/SecurityStatusWidget";
 
 const Page = async ({
   searchParams,
@@ -65,6 +66,9 @@ const Page = async ({
       </Suspense>
       <Suspense fallback={<Skeleton />}>
         <AirQualityWidget />
+      </Suspense>
+      <Suspense fallback={<Skeleton />}>
+        <SecurityStatusWidget />
       </Suspense>
     </div>
   );
