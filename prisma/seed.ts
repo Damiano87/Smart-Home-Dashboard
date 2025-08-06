@@ -1,88 +1,65 @@
-import { prisma } from "../src/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 async function main() {
-  // Tworzymy użytkownika
-  const user = await prisma.user.create({
-    data: {
-      name: "Jan Kowalski",
-      email: "jan@example.com",
-      image: "https://i.pravatar.cc/150?img=5",
-    },
-  });
+  const deviceIds = [
+    "67f552cfdee577dc1deded63", // Salon
+    "6865962bb34a7cdc22795f69", // Sypialnia
+    "686596bcb34a7cdc22795f6e", // Biuro
+  ];
 
-  // Dom użytkownika
-  const home = await prisma.home.create({
-    data: {
-      name: "Dom Główny",
-      location: "Kraków",
-      userId: user.id,
-    },
-  });
+  const baseDate = new Date("2025-08-06T00:00:00.000Z");
+  const data: any[] = [];
 
-  // Pokój - salon
-  const room = await prisma.room.create({
-    data: {
-      name: "Salon",
-      floor: 1,
-      area: 25.5,
-      homeId: home.id,
-    },
-  });
+  deviceIds.forEach((deviceId, deviceIndex) => {
+    for (let hour = 0; hour < 24; hour++) {
+      const timestamp = new Date(baseDate);
+      timestamp.setUTCHours(hour);
 
-  // Czujnik temperatury
-  const tempSensor = await prisma.device.create({
-    data: {
-      name: "Czujnik temperatury - Salon",
-      type: "temperature_sensor",
-      status: "online",
-      isActive: true,
-      lastSeen: new Date(),
-      roomId: room.id,
-    },
-  });
+      // różnice w pokojach
+      const tempOffset = deviceIndex === 0 ? 0.5 : deviceIndex === 1 ? -0.3 : 0;
+      const humidityOffset = deviceIndex === 2 ? 3 : deviceIndex === 1 ? -2 : 0;
+      const noiseOffset = deviceIndex === 0 ? 2 : deviceIndex === 1 ? -1 : 0;
 
-  // Czujnik ruchu
-  const motionSensor = await prisma.device.create({
-    data: {
-      name: "Czujnik ruchu - Salon",
-      type: "motion_sensor",
-      status: "online",
-      isActive: true,
-      lastSeen: new Date(),
-      roomId: room.id,
-    },
-  });
+      // symulacja przebiegu dobowego
+      const temperature =
+        22 + tempOffset + Math.sin(((hour - 6) / 24) * 2 * Math.PI) * 1.2;
+      const humidity =
+        47 + humidityOffset + Math.sin(((hour + 6) / 24) * 2 * Math.PI) * 3;
+      const co2 =
+        600 +
+        (hour < 6 || hour > 21 ? 200 : 0) +
+        Math.sin(((hour + 3) / 24) * 2 * Math.PI) * 50;
+      const power =
+        hour >= 7 && hour <= 22
+          ? 20 + Math.abs(Math.sin((hour / 24) * 2 * Math.PI) * 70)
+          : 5;
+      const airQuality =
+        20 + Math.abs(Math.sin((hour / 24) * 2 * Math.PI) * 10);
+      const noiseLevel =
+        28 +
+        noiseOffset +
+        (hour >= 7 && hour <= 22
+          ? Math.abs(Math.sin((hour / 24) * 2 * Math.PI) * 12)
+          : 0);
 
-  // Symulujemy dane pomiarowe z temperatury z ostatnich 24h (co godzinę)
-  const now = new Date();
-  for (let i = 0; i < 24; i++) {
-    const timestamp = new Date(now.getTime() - i * 60 * 60 * 1000); // każda godzina
-    await prisma.sensorData.create({
-      data: {
-        deviceId: tempSensor.id,
+      data.push({
         timestamp,
-        temperature: 21 + Math.random() * 3,
-        humidity: 35 + Math.random() * 10,
-        co2: 350 + Math.floor(Math.random() * 50),
-        power: 0.5 + Math.random() * 0.3,
-      },
-    });
-  }
-
-  // Dodajmy zdarzenie z czujnika ruchu
-  await prisma.deviceEvent.create({
-    data: {
-      deviceId: motionSensor.id,
-      timestamp: new Date(),
-      type: "motion_detected",
-      details: {
-        location: "Salon",
-        intensity: Math.random(),
-      },
-    },
+        deviceId,
+        temperature: parseFloat(temperature.toFixed(1)),
+        humidity: parseFloat(humidity.toFixed(1)),
+        co2: Math.round(co2),
+        power: parseFloat(power.toFixed(1)),
+        airQuality: Math.round(airQuality),
+        noiseLevel: Math.round(noiseLevel),
+      });
+    }
   });
 
-  console.log("Zakończono seedowanie 🎉");
+  await prisma.sensorData.createMany({
+    data,
+  });
+
+  console.log(`Inserted ${data.length} records into sensorData`);
 }
 
 main()
