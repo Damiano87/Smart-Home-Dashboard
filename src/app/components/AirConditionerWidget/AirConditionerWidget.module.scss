@@ -1,0 +1,287 @@
+@use "../../../styles/variables.scss" as vars;
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.count {
+  background-color: vars.$accent-color;
+  color: vars.$dashboard-bg;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.emptyState {
+  padding: 2rem;
+  text-align: center;
+}
+
+.emptyText {
+  color: vars.$secondary-text;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.acList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.acItem {
+  padding: 1rem;
+  background-color: vars.$widget-bg;
+  border-radius: calc(vars.$border-radius - 0.125rem);
+  transition: vars.$transition;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    transform: translateX(4px);
+  }
+}
+
+.acHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.roomInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.roomName {
+  color: vars.$primary-text;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.connectionStatus {
+  display: flex;
+  align-items: center;
+}
+
+.statusOnline {
+  color: vars.$semantic-positive;
+}
+
+.statusOffline {
+  color: vars.$semantic-negative;
+}
+
+.modeIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.modeCool {
+  background-color: rgba(139, 226, 219, 0.2);
+  color: vars.$chart5;
+}
+
+.modeHeat {
+  background-color: rgba(255, 150, 126, 0.2);
+  color: vars.$semantic-negative;
+}
+
+.modeFan {
+  background-color: rgba(171, 208, 6, 0.2);
+  color: vars.$accent-color;
+}
+
+.modeAuto {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: vars.$primary-blue;
+}
+
+.modeOff {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: vars.$secondary-text;
+}
+
+.temperatureSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.tempDisplay {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.currentTemp,
+.targetTemp {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.tempValue {
+  color: vars.$primary-text;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.tempLabel {
+  color: vars.$secondary-text;
+  font-size: 0.75rem;
+}
+
+.tempDiff {
+  display: flex;
+  align-items: center;
+}
+
+.diffIndicator {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.diffGood {
+  background-color: rgba(24, 184, 126, 0.2);
+  color: vars.$semantic-positive;
+}
+
+.diffMedium {
+  background-color: rgba(245, 220, 113, 0.2);
+  color: vars.$yellow-600;
+}
+
+.diffHigh {
+  background-color: rgba(255, 150, 126, 0.2);
+  color: vars.$semantic-negative;
+}
+
+.controlsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fanSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fanLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: vars.$secondary-text;
+  font-size: 0.8rem;
+}
+
+.fanIndicator {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.125rem;
+  height: 0.75rem;
+}
+
+.fanBar {
+  width: 0.25rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 0.125rem;
+  transition: background-color 0.3s ease;
+
+  &:nth-child(1) {
+    height: 0.25rem;
+  }
+  &:nth-child(2) {
+    height: 0.5rem;
+  }
+  &:nth-child(3) {
+    height: 0.75rem;
+  }
+
+  &.fanBarActive {
+    background-color: vars.$chart2;
+  }
+}
+
+.featuresSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.features {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: vars.$chart2;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: vars.$chart4;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .acHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .temperatureSection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .tempDisplay {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .featuresSection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

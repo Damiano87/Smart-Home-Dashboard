@@ -32,12 +32,6 @@ export const processTemperatureData = (rawData: TempSensorData[]) => {
   );
 };
 
-// rename device types
-export const renameDeviceType = (name: string) => {
-  if (name === "temperature_sensor") return "Temperature sensor";
-  if (name === "motion_sensor") return "Motion sensor";
-};
-
 // rename room names
 export const renameRoom = (name: string | undefined) => {
   if (name === "Salon") return "Living room";

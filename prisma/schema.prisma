@@ -103,16 +103,17 @@ model Room {
 }
 
 model Device {
-  id       String        @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  type     String // np. temperature_sensor, light, motion_sensor, air_conditioner
-  status   String // online/offline
-  isActive Boolean       @default(true)
-  lastSeen DateTime
-  room     Room          @relation(fields: [roomId], references: [id])
-  roomId   String        @db.ObjectId
-  data     SensorData[]
-  events   DeviceEvent[]
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  type           String // np. temperature_sensor, light, motion_sensor, air_conditioner
+  status         String // online/offline
+  isActive       Boolean         @default(true)
+  lastSeen       DateTime
+  room           Room            @relation(fields: [roomId], references: [id])
+  roomId         String          @db.ObjectId
+  data           SensorData[]
+  events         DeviceEvent[]
+  airConditioner AirConditioner? // new relation
 }
 
 model SensorData {
@@ -123,9 +124,13 @@ model SensorData {
   temperature Float?
   humidity    Float?
   co2         Int?
-  power       Float?
+  power       Float? // energy usage by air conditioner
   airQuality  Int?
   noiseLevel  Int?
+
+  // additional data about air conditioners
+  setTemperature Float? // set temperature 
+  energyUsage    Float? // current energy usage
 }
 
 model DeviceEvent {
@@ -135,4 +140,32 @@ model DeviceEvent {
   timestamp DateTime @default(now())
   type      String // e.g., motion_detected, turned_on, ac_mode_changed, temp_reached
   details   Json?
+}
+
+model AirConditioner {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  device   Device @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  deviceId String @unique @db.ObjectId
+
+  // basic air conditioner settings
+  targetTemp  Float? // target temperature
+  currentTemp Float? // current temperature
+  mode        String  @default("off") // off, cool, heat, auto, fan, dry
+  fanSpeed    String  @default("auto") // auto, low, medium, high
+  swing       Boolean @default(false) // is oscilation on
+
+  // advanced settings
+  timerOn   DateTime? // timer on
+  timerOff  DateTime? // timer off
+  ecoMode   Boolean   @default(false)
+  sleepMode Boolean   @default(false)
+
+  // temperature limits
+  minTemp Float @default(16.0)
+  maxTemp Float @default(32.0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("air_conditioners")
 }

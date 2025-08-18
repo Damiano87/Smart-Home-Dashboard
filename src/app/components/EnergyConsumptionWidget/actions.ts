@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 
-export async function getEnergyConsumption(dateString = "2025-04-08") {
+export async function getEnergyConsumption(dateString = "2025-08-06") {
   try {
     const energyCostPerKWh = 0.25;
     const targetDate = new Date(dateString);
@@ -44,13 +44,14 @@ export async function getEnergyConsumption(dateString = "2025-04-08") {
       })
     );
 
-    const totalPower = roomResults.reduce((sum, r) => sum + r.totalPower, 0);
+    const totalPower =
+      roomResults.reduce((sum, r) => sum + r.totalPower, 0) / 1000;
     const totalCost = Number((totalPower * energyCostPerKWh).toFixed(2));
 
     return {
       date: dateString,
       rooms: roomResults,
-      totalPower: Number(totalPower.toFixed(3)),
+      totalPower: Number(totalPower.toFixed(2)),
       totalCost,
     };
   } catch (error) {

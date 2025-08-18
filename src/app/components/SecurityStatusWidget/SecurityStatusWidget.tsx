@@ -71,7 +71,7 @@ export default async function SecurityStatusWidget() {
             </span>
           </div>
         </div>
-        <div className={styles.securityDetails}>
+        <div className={styles.metrics}>
           <div className={styles.detailItem}>
             <div className={styles.detailIcon}>
               <Eye size={16} />

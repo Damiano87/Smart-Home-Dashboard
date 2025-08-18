@@ -43,7 +43,6 @@ const isSensorActive = (sensor: Sensor): boolean => {
 
 // Simulates recent motion detection events for demonstration
 // In a real application, this would query an events/logs collection
-
 const getRecentMotionEvents = async (
   activeSensorIds: string[]
 ): Promise<number> => {

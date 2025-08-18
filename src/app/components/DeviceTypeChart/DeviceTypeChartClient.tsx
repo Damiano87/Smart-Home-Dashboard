@@ -11,13 +11,19 @@ import {
 } from "recharts";
 import styles from "./DeviceTypeChart.module.scss";
 import "../../globals.scss";
-import { renameDeviceType } from "@/utils/functions";
 
 type Props = {
   deviceData: { name: string; value: number }[];
 };
 
 const COLORS = ["#abd006", "#2baba1", "#d6f5f2", "#fcff66", "#18b87e"] as const;
+
+// rename device types
+export const renameDeviceType = (name: string) => {
+  if (name === "temperature_sensor") return "Temperature sensor";
+  if (name === "motion_sensor") return "Motion sensor";
+  if (name === "AirConditioner") return "Air conditioners";
+};
 
 const DeviceTypesPieChart = ({
   deviceData,
