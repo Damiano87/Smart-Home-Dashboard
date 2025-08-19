@@ -23,6 +23,7 @@ export const renameDeviceType = (name: string) => {
   if (name === "temperature_sensor") return "Temperature sensor";
   if (name === "motion_sensor") return "Motion sensor";
   if (name === "AirConditioner") return "Air conditioners";
+  if (name === "light") return "Light";
 };
 
 const DeviceTypesPieChart = ({

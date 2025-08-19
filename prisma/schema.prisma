@@ -113,7 +113,8 @@ model Device {
   roomId         String          @db.ObjectId
   data           SensorData[]
   events         DeviceEvent[]
-  airConditioner AirConditioner? // new relation
+  airConditioner AirConditioner?
+  light          Light?
 }
 
 model SensorData {
@@ -168,4 +169,28 @@ model AirConditioner {
   updatedAt DateTime @updatedAt
 
   @@map("air_conditioners")
+}
+
+model Light {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  device   Device @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  deviceId String @unique @db.ObjectId
+
+  // podstawowe ustawienia światła
+  isOn       Boolean @default(false)
+  brightness Int     @default(100) // 0-100%
+  color      String? // hex color dla smart bulbs
+
+  // zaawansowane funkcje
+  dimming   Boolean @default(false) // czy wspiera ściemnianie
+  colorTemp Int? // temperatura barwowa (2700K-6500K)
+
+  // harmonogramy
+  timerOn  DateTime?
+  timerOff DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("lights")
 }

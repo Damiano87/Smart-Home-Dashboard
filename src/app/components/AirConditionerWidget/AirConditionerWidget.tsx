@@ -19,8 +19,6 @@ import { renameRoom } from "@/utils/functions";
 export default async function AirConditionerWidget() {
   const airConditioners: AirConditionerData[] = await getAirConditioners();
 
-  console.log(airConditioners);
-
   const getModeIcon = (mode: string) => {
     switch (mode.toLowerCase()) {
       case "cool":

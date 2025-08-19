@@ -17,6 +17,7 @@ import TemperatureWidget from "./components/TemperatureWidget/TemperatureWidget"
 import AirQualityWidget from "./components/AirQualityWidget/AirQualityWidget";
 import SecurityStatusWidget from "./components/SecurityStatusWidget/SecurityStatusWidget";
 import AirConditionersWidget from "./components/AirConditionerWidget/AirConditionerWidget";
+import { LightControlWidget } from "./components/LightControlWidget/LightControlWidget";
 
 const Page = async ({
   searchParams,
@@ -73,6 +74,9 @@ const Page = async ({
       </Suspense>
       <Suspense fallback={<Skeleton />}>
         <AirConditionersWidget />
+      </Suspense>
+      <Suspense fallback={<Skeleton />}>
+        <LightControlWidget />
       </Suspense>
     </div>
   );
