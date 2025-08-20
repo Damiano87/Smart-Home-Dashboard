@@ -3,6 +3,7 @@ export interface Room {
   name: string;
   floor?: number;
   area?: number;
+  devices: Device[];
 }
 
 export interface Device {

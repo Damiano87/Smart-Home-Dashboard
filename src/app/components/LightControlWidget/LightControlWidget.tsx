@@ -1,6 +1,6 @@
 import { Lightbulb, Power, Settings, Zap } from "lucide-react";
 import { getRoomsWithLights } from "./actions";
-import { RoomLightControl } from "./RoomLightControl";
+import { RoomLightControl } from "./RoomLightControl/RoomLightControl";
 import styles from "./LightControlWidget.module.scss";
 
 interface LightControlWidgetProps {
@@ -55,9 +55,7 @@ export async function LightControlWidget({
             <p className={styles.emptyText}>No lights found</p>
           </div>
         ) : (
-          rooms.map((room) => (
-            <RoomLightControl key={room.id} room={Promise.resolve(room)} />
-          ))
+          rooms.map((room) => <RoomLightControl key={room.id} room={room} />)
         )}
       </div>
     </div>
