@@ -1,4 +1,4 @@
-import { Lightbulb, Power, Settings, Zap } from "lucide-react";
+import { Lightbulb, Zap } from "lucide-react";
 import { getRoomsWithLights } from "./actions";
 import { RoomLightControl } from "./RoomLightControl/RoomLightControl";
 import styles from "./LightControlWidget.module.scss";
@@ -12,10 +12,7 @@ export async function LightControlWidget({
 }: LightControlWidgetProps) {
   const rooms = await getRoomsWithLights();
 
-  console.log(rooms);
-
   // Calculate statistics
-  const totalLights = rooms.reduce((acc, room) => acc + room.devices.length, 0);
 
   const onlineLights = rooms.reduce(
     (acc, room) =>

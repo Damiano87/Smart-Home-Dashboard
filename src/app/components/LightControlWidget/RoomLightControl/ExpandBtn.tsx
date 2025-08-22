@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import React from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import styles from "../LightControlWidget.module.scss";
 import { Device } from "../types";
 
-const ExpandBtn = ({ devices }: { devices: Device[] }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+type ExpandBtnProps = {
+  devices: Device[];
+  isExpanded: boolean;
+  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
+const ExpandBtn = ({ devices, isExpanded, setIsExpanded }: ExpandBtnProps) => {
   return (
     <button
       onClick={() => setIsExpanded(!isExpanded)}

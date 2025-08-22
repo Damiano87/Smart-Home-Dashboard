@@ -19,12 +19,14 @@ const BrightnessControl = ({ room }: { room: Room }) => {
       : 0
   );
 
+  //   change brightness
   const handleBrightnessChange = (newBrightness: number) => {
     setBrightness(newBrightness);
     startTransition(async () => {
       await setRoomBrightness(room.id, newBrightness);
     });
   };
+
   return (
     <div className={styles.brightnessControl}>
       <button

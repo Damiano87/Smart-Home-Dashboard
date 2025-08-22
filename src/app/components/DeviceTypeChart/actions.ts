@@ -1,4 +1,4 @@
-"use server";
+import "server-only";
 
 import { prisma } from "@/lib/prisma";
 
@@ -10,7 +10,9 @@ export const getDeviceTypeDistribution = async () => {
       _count: { type: true },
     });
 
-    // Zwracamy w formacie przyjaznym do wykresu
+    console.log(deviceCounts);
+
+    // return in chart friendly format
     const deviceData = deviceCounts.map((item) => ({
       name: item.type,
       value: item._count.type,
