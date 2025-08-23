@@ -10,8 +10,6 @@ export const getDeviceTypeDistribution = async () => {
       _count: { type: true },
     });
 
-    console.log(deviceCounts);
-
     // return in chart friendly format
     const deviceData = deviceCounts.map((item) => ({
       name: item.type,

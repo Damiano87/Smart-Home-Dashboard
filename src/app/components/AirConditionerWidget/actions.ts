@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 /**
  * Data type required by the AirConditionerWidget component.
@@ -85,10 +86,37 @@ export async function getAirConditioners(): Promise<AirConditionerData[]> {
       } satisfies AirConditionerData;
     });
   } catch (error) {
-    console.error(
-      "[getAirConditioners] Error while fetching air conditioners:",
-      error
-    );
+    console.error("Error while fetching air conditioners", error);
     return []; // safe fallback for the UI
+  }
+}
+
+/**
+ Changes target temperature of chosen air conditioner
+ */
+export async function changeTargetTemp(acId: string, operator: string) {
+  try {
+    const currentTargetTemp = await prisma.airConditioner.findUnique({
+      where: { id: acId },
+      select: { targetTemp: true },
+    });
+
+    if (!currentTargetTemp?.targetTemp) {
+      return;
+    }
+
+    await prisma.airConditioner.update({
+      where: { id: acId },
+      data: {
+        targetTemp:
+          operator === "+"
+            ? currentTargetTemp?.targetTemp + 0.1
+            : currentTargetTemp?.targetTemp - 0.1,
+      },
+    });
+
+    revalidatePath("/");
+  } catch (error) {
+    console.error("Error changing temperature target", error);
   }
 }

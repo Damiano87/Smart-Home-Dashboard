@@ -285,3 +285,22 @@
     gap: 0.5rem;
   }
 }
+
+.changeTargetContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.targetTempBtn {
+  display: flex;
+  align-items: center;
+  background-color: vars.$dashboard-bg;
+  border-radius: 0.2rem;
+  padding: 0.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(0.9);
+  }
+}
