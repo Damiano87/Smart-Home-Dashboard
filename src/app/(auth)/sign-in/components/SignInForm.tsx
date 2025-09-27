@@ -3,20 +3,25 @@
 import { signInWithCredentials } from "@/lib/actions";
 import { useActionState } from "react";
 import styles from "../signin.module.scss";
+import { signIn } from "next-auth/react";
 
-const initialState = { success: false, error: "" };
+// const initialState = { success: false, error: "" };
 
 const SignInForm = () => {
-  const [state, action, isPending] = useActionState(
-    signInWithCredentials,
-    initialState
-  );
+  // const [state, action, isPending] = useActionState(
+  //   signInWithCredentials,
+  //   initialState
+  // );
 
-  console.log(state);
+  const credentialsAction = (formData: FormData) => {
+    console.log(formData);
+
+    signIn("credentials", formData);
+  };
 
   return (
-    <form className={styles.signinForm} action={action}>
-      {state?.error && <p className="text-red-500">{state.error}</p>}
+    <form className={styles.signinForm} action={credentialsAction}>
+      {/* {state?.error && <p className="text-red-500">{state.error}</p>} */}
       <input
         name="email"
         placeholder="Email"
@@ -33,8 +38,8 @@ const SignInForm = () => {
         autoComplete="current-password"
         className={styles.input}
       />
-      <button className={styles.fullWidth} type="submit">
-        sign in
+      <button className={styles.fullWidth} onClick={() => signIn()}>
+        Sign in
       </button>
     </form>
   );

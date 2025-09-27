@@ -1,5 +1,3 @@
-import { SignOut } from "./components/SignOut/SignOut";
-import { auth } from "@/lib/auth";
 import TemperatureChart from "./components/TemperatureChart/TemperatureChart";
 import { RoomType } from "@/types/types";
 import Skeleton from "./components/Skeleton/Skeleton";
@@ -36,12 +34,6 @@ const Page = async ({
 
   // get energy consumption data
   const energyConsumptionData = getEnergyConsumptionData();
-
-  // const session = await auth();
-
-  // console.log(session);
-
-  // if (!session) redirect("/sign-in");
 
   return (
     <div className={styles.mainGrid}>

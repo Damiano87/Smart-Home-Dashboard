@@ -1,13 +1,15 @@
-import { auth } from "@/lib/auth";
+"use client";
+
 import { GithubSignIn } from "../../components/GithubSignIn/GithubSignIn";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import styles from "./signin.module.scss";
 import { GoogleSignIn } from "@/app/components/GoogleSignIn/GoogleSignIn";
 import SignInForm from "./components/SignInForm";
+import { useSession } from "next-auth/react";
 
-const Page = async () => {
-  const session = await auth();
+const Page = () => {
+  const { data: session } = useSession();
 
   console.log(session);
 
@@ -18,8 +20,8 @@ const Page = async () => {
       <div className={styles.signinContainer}>
         <h1 className={styles.signinTitle}>Sign In</h1>
 
-        <GithubSignIn />
-        <GoogleSignIn />
+        {/* <GithubSignIn />
+        <GoogleSignIn /> */}
 
         <div className={styles.divider}>
           <div className={styles.dividerLine}>

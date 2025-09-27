@@ -5,75 +5,93 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
-import { schema } from "./schema";
+import { signInSchema } from "./schema";
 import Google from "next-auth/providers/google";
 import { compare } from "bcrypt";
+import { ZodError } from "zod";
 
 const adapter = PrismaAdapter(prisma);
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter,
   providers: [
-    GitHub,
-    Google,
+    // GitHub,
+    // Google,
     Credentials({
       credentials: {
         email: {},
         password: {},
       },
       authorize: async (credentials) => {
-        const validatedCredentials = schema.parse(credentials);
+        try {
+          let user = null;
 
-        const user = await prisma.user.findFirst({
-          where: {
-            email: validatedCredentials.email,
-          },
-        });
+          const { email, password } = await signInSchema.parseAsync(
+            credentials
+          );
 
-        if (!user) return null;
+          // logic to verify if the user exists
+          user = await prisma.user.findFirst({
+            where: {
+              email,
+            },
+          });
 
-        // check if password is correct
-        const passwordMatch = await compare(
-          validatedCredentials.password,
-          user.password as string
-        );
+          if (!user) {
+            throw new Error("Invalid credentials.");
+          }
 
-        if (!passwordMatch) return null;
+          // check if password is correct
+          const passwordMatch = await compare(
+            password,
+            user.password as string
+          );
 
-        return user;
+          if (!passwordMatch) {
+            throw new Error("Invalid password.");
+          }
+
+          // return user object with their profile data
+          return user;
+        } catch (error) {
+          if (error instanceof ZodError) {
+            // Return `null` to indicate that the credentials are invalid
+            return null;
+          }
+        }
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, account }) {
-      if (account?.provider === "credentials") {
-        token.credentials = true;
-      }
-      return token;
-    },
-  },
-  jwt: {
-    encode: async function (params) {
-      if (params.token?.credentials) {
-        const sessionToken = uuid();
+  // callbacks: {
+  //   async jwt({ token, account }) {
+  //     if (account?.provider === "credentials") {
+  //       token.credentials = true;
+  //     }
+  //     return token;
+  //   },
+  // },
+  // jwt: {
+  //   encode: async function (params) {
+  //     if (params.token?.credentials) {
+  //       const sessionToken = uuid();
 
-        if (!params.token.sub) {
-          throw new Error("No user ID found in token");
-        }
+  //       if (!params.token.sub) {
+  //         throw new Error("No user ID found in token");
+  //       }
 
-        const createdSession = await adapter?.createSession?.({
-          sessionToken: sessionToken,
-          userId: params.token.sub,
-          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        });
+  //       const createdSession = await adapter?.createSession?.({
+  //         sessionToken: sessionToken,
+  //         userId: params.token.sub,
+  //         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+  //       });
 
-        if (!createdSession) {
-          throw new Error("Failed to create session");
-        }
+  //       if (!createdSession) {
+  //         throw new Error("Failed to create session");
+  //       }
 
-        return sessionToken;
-      }
-      return defaultEncode(params);
-    },
-  },
+  //       return sessionToken;
+  //     }
+  //     return defaultEncode(params);
+  //   },
+  // },
 });
