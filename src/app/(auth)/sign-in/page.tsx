@@ -1,17 +1,10 @@
-"use client";
-
-import { GithubSignIn } from "../../components/GithubSignIn/GithubSignIn";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import styles from "./signin.module.scss";
-import { GoogleSignIn } from "@/app/components/GoogleSignIn/GoogleSignIn";
 import SignInForm from "./components/SignInForm";
-import { useSession } from "next-auth/react";
+import { auth } from "@/lib/auth";
 
-const Page = () => {
-  const { data: session } = useSession();
-
-  console.log(session);
+const Page = async () => {
+  const session = await auth();
 
   if (session) redirect("/");
 
@@ -32,9 +25,9 @@ const Page = () => {
           </div>
         </div>
         <SignInForm />
-        <div className={styles.signupLink}>
+        {/* <div className={styles.signupLink}>
           <Link href="/sign-up">Don&apos;t have an account? Sign up</Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

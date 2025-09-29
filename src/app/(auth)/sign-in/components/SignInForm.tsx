@@ -1,27 +1,20 @@
 "use client";
 
-import { signInWithCredentials } from "@/lib/actions";
-import { useActionState } from "react";
 import styles from "../signin.module.scss";
-import { signIn } from "next-auth/react";
+import { signInAction, SignInState } from "../actions";
+import { useActionState } from "react";
 
-// const initialState = { success: false, error: "" };
+const initialState: SignInState = {};
 
 const SignInForm = () => {
-  // const [state, action, isPending] = useActionState(
-  //   signInWithCredentials,
-  //   initialState
-  // );
-
-  const credentialsAction = (formData: FormData) => {
-    console.log(formData);
-
-    signIn("credentials", formData);
-  };
+  const [state, formAction, isPending] = useActionState(
+    signInAction,
+    initialState
+  );
 
   return (
-    <form className={styles.signinForm} action={credentialsAction}>
-      {/* {state?.error && <p className="text-red-500">{state.error}</p>} */}
+    <form className={styles.signinForm} action={formAction}>
+      {state?.error && <p className={styles.error}>{state.error}</p>}
       <input
         name="email"
         placeholder="Email"
@@ -29,6 +22,7 @@ const SignInForm = () => {
         required
         autoComplete="email"
         className={styles.input}
+        disabled={isPending}
       />
       <input
         name="password"
@@ -37,11 +31,26 @@ const SignInForm = () => {
         required
         autoComplete="current-password"
         className={styles.input}
+        disabled={isPending}
       />
-      <button className={styles.fullWidth} onClick={() => signIn()}>
-        Sign in
-      </button>
+      <SubmitButton isPending={isPending} />
     </form>
   );
 };
+
+function SubmitButton({ isPending }: { isPending: boolean }) {
+  return (
+    <button className={styles.fullWidth} type="submit" disabled={isPending}>
+      {isPending ? (
+        <>
+          <span className={styles.spinner}></span>
+          Signing in...
+        </>
+      ) : (
+        "Sign in"
+      )}
+    </button>
+  );
+}
+
 export default SignInForm;

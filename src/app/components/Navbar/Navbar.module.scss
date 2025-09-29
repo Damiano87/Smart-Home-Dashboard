@@ -1,0 +1,59 @@
+@use "../../../styles/variables.scss" as vars;
+
+.navbar {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 1rem;
+  width: 100vw;
+  height: 5rem;
+  background-color: vars.$widget-bg;
+  margin-bottom: 1rem;
+  padding-block: 1rem;
+  padding-inline: 2rem;
+}
+
+.logoutBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: vars.$border-radius;
+  border: none;
+  cursor: pointer;
+
+  background-color: vars.$logout-bg;
+  color: vars.$logout-text;
+
+  transition: vars.$transition;
+
+  // Icon inside button
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    stroke: currentColor;
+  }
+
+  &:hover {
+    // background-color: vars.$logout-bg-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(vars.$logout-bg, 0.3);
+  }
+
+  &:active {
+    // background-color: vars.$logout-bg-active;
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(vars.$logout-bg, 0.4);
+  }
+
+  &:disabled {
+    // background-color: lighten(vars.$logout-bg, 30%);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+}

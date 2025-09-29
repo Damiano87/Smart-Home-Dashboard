@@ -16,12 +16,20 @@ import AirQualityWidget from "./components/AirQualityWidget/AirQualityWidget";
 import SecurityStatusWidget from "./components/SecurityStatusWidget/SecurityStatusWidget";
 import AirConditionersWidget from "./components/AirConditionerWidget/AirConditionerWidget";
 import { LightControlWidget } from "./components/LightControlWidget/LightControlWidget";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 const Page = async ({
   searchParams,
 }: {
   searchParams?: Promise<{ room?: RoomType }>;
 }) => {
+  const session = await auth();
+
+  console.log("Sesja. Główny komponent", session?.user);
+
+  if (!session?.user) redirect("/sign-in");
+
   // get search params for select
   const resolvedSearchParams = await searchParams;
   const selectedRoom = resolvedSearchParams?.room ?? "all";

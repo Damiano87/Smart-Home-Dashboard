@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.scss";
-import { SessionProvider } from "next-auth/react";
+import { AuthProvider } from "./components/AuthProvider";
+import Navbar from "./components/Navbar/Navbar";
+import { Suspense } from "react";
+import Skeleton from "./components/Skeleton/Skeleton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <SessionProvider>{children}</SessionProvider>
+        <AuthProvider>
+          <Suspense fallback={<Skeleton />}>
+            <Navbar />
+          </Suspense>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

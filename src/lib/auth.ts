@@ -1,19 +1,33 @@
-import { v4 as uuid } from "uuid";
-import { encode as defaultEncode } from "next-auth/jwt";
 import { prisma } from "./prisma";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import GitHub from "next-auth/providers/github";
 import { signInSchema } from "./schema";
-import Google from "next-auth/providers/google";
 import { compare } from "bcrypt";
 import { ZodError } from "zod";
 
-const adapter = PrismaAdapter(prisma);
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter,
+  pages: {
+    signIn: "/sign-in",
+  },
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.email = token.email;
+      }
+      return session;
+    },
+  },
   providers: [
     // GitHub,
     // Google,
@@ -54,44 +68,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           // return user object with their profile data
           return user;
         } catch (error) {
+          console.log("=== AUTHORIZE ERROR ===");
+          console.log("Error type:", error?.constructor?.name);
+          console.log(
+            "Error message:",
+            error instanceof Error ? error.message : error
+          );
+          console.log("Is ZodError:", error instanceof ZodError);
+
           if (error instanceof ZodError) {
-            // Return `null` to indicate that the credentials are invalid
+            console.log("Zod validation errors:", error.errors);
             return null;
           }
+
+          console.log("Returning null for other error");
+          return null;
         }
       },
     }),
   ],
-  // callbacks: {
-  //   async jwt({ token, account }) {
-  //     if (account?.provider === "credentials") {
-  //       token.credentials = true;
-  //     }
-  //     return token;
-  //   },
-  // },
-  // jwt: {
-  //   encode: async function (params) {
-  //     if (params.token?.credentials) {
-  //       const sessionToken = uuid();
-
-  //       if (!params.token.sub) {
-  //         throw new Error("No user ID found in token");
-  //       }
-
-  //       const createdSession = await adapter?.createSession?.({
-  //         sessionToken: sessionToken,
-  //         userId: params.token.sub,
-  //         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-  //       });
-
-  //       if (!createdSession) {
-  //         throw new Error("Failed to create session");
-  //       }
-
-  //       return sessionToken;
-  //     }
-  //     return defaultEncode(params);
-  //   },
-  // },
 });
