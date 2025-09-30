@@ -16,18 +16,15 @@ const Page = async () => {
         {/* <GithubSignIn />
         <GoogleSignIn /> */}
 
-        <div className={styles.divider}>
+        {/* <div className={styles.divider}>
           <div className={styles.dividerLine}>
             <span className={styles.dividerBorder} />
           </div>
           <div className={styles.dividerText}>
             <span className={styles.dividerLabel}>Or continue with email</span>
           </div>
-        </div>
-        <SignInForm />
-        {/* <div className={styles.signupLink}>
-          <Link href="/sign-up">Don&apos;t have an account? Sign up</Link>
         </div> */}
+        <SignInForm />
       </div>
     </div>
   );
