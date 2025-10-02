@@ -12,25 +12,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.email = user.email;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.email = token.email;
-      }
-      return session;
-    },
-  },
   providers: [
-    // GitHub,
-    // Google,
     Credentials({
       credentials: {
         email: {},
@@ -88,3 +70,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
 });
+
+// callbacks: {
+//   async jwt({ token, user }) {
+//     if (user) {
+//       token.id = user.id;
+//       token.email = user.email;
+//     }
+//     return token;
+//   },
+//   async session({ session, token }) {
+//     if (token) {
+//       session.user.id = token.id;
+//       session.user.email = token.email;
+//     }
+//     return session;
+//   },
+// },

@@ -65,7 +65,6 @@ a {
 // Main container
 .container {
   width: 100%;
-  // max-width: 72rem;
   margin: 0 auto;
   padding: 1.5rem;
   background-color: vars.$widget-bg;
@@ -74,6 +73,19 @@ a {
 }
 
 .container:hover {
+  transform: translateY(-5);
+  transition: all 0.3s;
+}
+
+.autoContainer {
+  width: 100%;
+  padding: 1.5rem;
+  background-color: vars.$widget-bg;
+  border-radius: 0.5rem;
+  @include card-shadow;
+}
+
+.autoContainer:hover {
   transform: translateY(-5);
   transition: all 0.3s;
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.scss";
+import styles from "./page.module.scss";
 import { AuthProvider } from "./components/AuthProvider";
 import Navbar from "./components/Navbar/Navbar";
 import { Suspense } from "react";
@@ -34,7 +35,7 @@ export default function RootLayout({
           <Suspense fallback={<Skeleton />}>
             <Navbar />
           </Suspense>
-          {children}
+          <main className={styles.mainContent}>{children}</main>
         </AuthProvider>
       </body>
     </html>

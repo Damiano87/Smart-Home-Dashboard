@@ -1,9 +1,18 @@
+"use client";
+
 import { Thermometer } from "lucide-react";
 import ChangeTargetTempBtns from "./ChangeTargetTempBtns";
 import styles from "./AirConditionerWidget.module.scss";
 import { AirConditionerData } from "./actions";
+import { useOptimistic } from "react";
 
 const TemperatureSection = ({ ac }: { ac: AirConditionerData }) => {
+  // optimistic update of target tempearature
+  const [optimisticTemp, setOptimisticTemp] = useOptimistic(
+    ac.targetTemp,
+    (state, newTemp: number) => newTemp
+  );
+
   return (
     <div className={styles.temperatureSection}>
       <div className={styles.tempDisplay}>
@@ -13,10 +22,14 @@ const TemperatureSection = ({ ac }: { ac: AirConditionerData }) => {
           <span className={styles.tempLabel}>current</span>
         </div>
         <div className={styles.targetTemp}>
-          <span className={styles.tempValue}>{ac.targetTemp}°C</span>
+          <span className={styles.tempValue}>{optimisticTemp}°C</span>
           <span className={styles.tempLabel}>target</span>
         </div>
-        <ChangeTargetTempBtns acId={ac.id} />
+        <ChangeTargetTempBtns
+          acId={ac.id}
+          setOptimisticTemp={setOptimisticTemp}
+          optimisticTemp={optimisticTemp}
+        />
       </div>
 
       <div className={styles.tempDiff}>
@@ -29,9 +42,14 @@ const TemperatureSection = ({ ac }: { ac: AirConditionerData }) => {
               : styles.diffHigh
           }`}
         >
-          {ac.temperatureDiff > 0
-            ? `± ${ac.temperatureDiff.toFixed(1)}°C`
-            : "OK"}
+          {ac.temperatureDiff > 0 ? (
+            <div className={styles.flex}>
+              <span>±</span>
+              <span>{`${ac.temperatureDiff.toFixed(1)}°C`}</span>
+            </div>
+          ) : (
+            "OK"
+          )}
         </div>
       </div>
     </div>

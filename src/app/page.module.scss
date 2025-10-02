@@ -1,5 +1,45 @@
 .mainGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
+}
+
+.mainContent {
+  padding: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.acAndLight {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.customWidth {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .mainGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .mainContent {
+    padding: 2rem;
+  }
+  .acAndLight {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mainGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .mainContent {
+    padding: 2rem;
+  }
 }

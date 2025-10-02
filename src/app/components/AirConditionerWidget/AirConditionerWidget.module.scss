@@ -44,7 +44,7 @@
 
 .acItem {
   padding: 1rem;
-  background-color: vars.$widget-bg;
+  background-color: #ffffff0d;
   border-radius: calc(vars.$border-radius - 0.125rem);
   transition: vars.$transition;
 
@@ -132,6 +132,7 @@
 
 .tempDisplay {
   display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
@@ -154,14 +155,21 @@
 }
 
 .tempDiff {
+  margin-left: 0.5rem;
   display: flex;
   align-items: center;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
 }
 
 .diffIndicator {
   padding: 0.25rem 0.5rem;
   border-radius: 0.375rem;
-  font-size: 0.75rem;
+  font-size: 0.6rem;
   font-weight: 600;
 }
 
@@ -294,7 +302,8 @@
 .targetTempBtn {
   display: flex;
   align-items: center;
-  background-color: vars.$dashboard-bg;
+  background-color: vars.$widget-bg;
+  border: solid vars.$widget-title-bg;
   border-radius: 0.2rem;
   padding: 0.2rem;
   cursor: pointer;

@@ -12,8 +12,8 @@ export type AirConditionerData = {
   isOnline: boolean;
 
   mode: string;
-  currentTemp: number | null;
-  targetTemp: number | null;
+  currentTemp: number;
+  targetTemp: number;
   temperatureDiff: number;
 
   fanSpeed: string;
@@ -57,10 +57,7 @@ export async function getAirConditioners(): Promise<AirConditionerData[]> {
     return items.map((ac) => {
       const roomName = ac.device?.room?.name ?? "Unknown room";
 
-      const diff =
-        ac.currentTemp != null && ac.targetTemp != null
-          ? Math.abs(ac.currentTemp - ac.targetTemp)
-          : 0;
+      const diff = Math.abs(ac.currentTemp - ac.targetTemp);
 
       const temperatureDiff = diff < 0.05 ? 0 : Math.round(diff * 10) / 10;
 

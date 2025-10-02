@@ -24,7 +24,7 @@ export default async function AirConditionerWidget() {
   }
 
   return (
-    <div className={styles.widget}>
+    <div className="autoContainer">
       <div className={styles.header}>
         <div className={styles.iconContainer}>
           <Snowflake className={styles.icon} />

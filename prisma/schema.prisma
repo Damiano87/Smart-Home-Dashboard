@@ -149,8 +149,8 @@ model AirConditioner {
   deviceId String @unique @db.ObjectId
 
   // basic air conditioner settings
-  targetTemp  Float? // target temperature
-  currentTemp Float? // current temperature
+  targetTemp  Float // target temperature
+  currentTemp Float // current temperature
   mode        String  @default("off") // off, cool, heat, auto, fan, dry
   fanSpeed    String  @default("auto") // auto, low, medium, high
   swing       Boolean @default(false) // is oscilation on

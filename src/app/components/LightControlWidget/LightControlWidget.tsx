@@ -2,6 +2,7 @@ import { Lightbulb, Zap } from "lucide-react";
 import { getRoomsWithLights } from "./actions";
 import { RoomLightControl } from "./RoomLightControl/RoomLightControl";
 import styles from "./LightControlWidget.module.scss";
+import "../../globals.scss";
 
 interface LightControlWidgetProps {
   className?: string;
@@ -25,7 +26,7 @@ export async function LightControlWidget({
   );
 
   return (
-    <div className={`${styles.widget} ${className || ""}`}>
+    <div className={`autoContainer ${className || ""}`}>
       {/* Widget Header */}
       <div className={styles.header}>
         <div className={styles.titleSection}>

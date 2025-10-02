@@ -26,7 +26,7 @@ const Page = async ({
 }) => {
   const session = await auth();
 
-  console.log("Sesja. Główny komponent", session?.user);
+  console.log("Session. Main component", session?.user);
 
   if (!session?.user) redirect("/sign-in");
 
@@ -44,40 +44,44 @@ const Page = async ({
   const energyConsumptionData = getEnergyConsumptionData();
 
   return (
-    <div className={styles.mainGrid}>
-      <Suspense fallback={<Skeleton />}>
-        <TemperatureChart selectedRoom={selectedRoom} />
-      </Suspense>
-      <Suspense fallback={<Skeleton />}>
-        <DeviceTypesPieChart deviceData={deviceData} />
-      </Suspense>
-      <Suspense fallback={<Skeleton />}>
-        <RoomConditionsRadar radarData={radarData} />
-      </Suspense>
-      <Suspense fallback={<Skeleton />}>
-        <EnergyConsumptionChart consumptionData={energyConsumptionData} />
-      </Suspense>
-      <Suspense fallback={<Skeleton />}>
-        <EnergyConsumptionWidget />
-      </Suspense>
-      <Suspense fallback={<Skeleton />}>
-        <DeviceStatusWidget />
-      </Suspense>
-      <Suspense fallback={<Skeleton />}>
-        <TemperatureWidget />
-      </Suspense>
-      <Suspense fallback={<Skeleton />}>
-        <AirQualityWidget />
-      </Suspense>
-      <Suspense fallback={<Skeleton />}>
-        <SecurityStatusWidget />
-      </Suspense>
-      <Suspense fallback={<Skeleton />}>
-        <AirConditionersWidget />
-      </Suspense>
-      <Suspense fallback={<Skeleton />}>
-        <LightControlWidget />
-      </Suspense>
+    <div>
+      <div className={styles.mainGrid}>
+        <Suspense fallback={<Skeleton />}>
+          <TemperatureChart selectedRoom={selectedRoom} />
+        </Suspense>
+        <Suspense fallback={<Skeleton />}>
+          <DeviceTypesPieChart deviceData={deviceData} />
+        </Suspense>
+        <Suspense fallback={<Skeleton />}>
+          <RoomConditionsRadar radarData={radarData} />
+        </Suspense>
+        <Suspense fallback={<Skeleton />}>
+          <EnergyConsumptionChart consumptionData={energyConsumptionData} />
+        </Suspense>
+        <Suspense fallback={<Skeleton />}>
+          <EnergyConsumptionWidget />
+        </Suspense>
+        <Suspense fallback={<Skeleton />}>
+          <DeviceStatusWidget />
+        </Suspense>
+        <Suspense fallback={<Skeleton />}>
+          <TemperatureWidget />
+        </Suspense>
+        <Suspense fallback={<Skeleton />}>
+          <AirQualityWidget />
+        </Suspense>
+        <Suspense fallback={<Skeleton />}>
+          <SecurityStatusWidget />
+        </Suspense>
+      </div>
+      <div className={styles.acAndLight}>
+        <Suspense fallback={<Skeleton />}>
+          <AirConditionersWidget />
+        </Suspense>
+        <Suspense fallback={<Skeleton />}>
+          <LightControlWidget className={styles.customWidth} />
+        </Suspense>
+      </div>
     </div>
   );
 };
