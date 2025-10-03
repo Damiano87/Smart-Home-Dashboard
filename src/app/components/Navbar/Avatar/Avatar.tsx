@@ -6,7 +6,13 @@ const Avatar = ({ image }: { image?: string | null }) => {
 
   return (
     <div className={styles.avatarWrapper}>
-      <Image src={image} alt="Avatar" fill className={styles.avatar} />
+      <Image
+        src={image}
+        alt="Avatar"
+        fill
+        sizes="40px"
+        className={styles.avatar}
+      />
     </div>
   );
 };
