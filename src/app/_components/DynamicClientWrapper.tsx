@@ -7,33 +7,30 @@ import Skeleton from "./Skeleton/Skeleton";
 // map of available components
 const componentMap = {
   EnergyConsumptionChart: dynamic(
-    () => import("../components/EnergyConsumptionChart/EnergyConsChart"),
+    () => import("./EnergyConsumptionChart/EnergyConsChart"),
     {
       ssr: false,
       loading: () => <Skeleton />,
     }
   ),
   TemperatureChart: dynamic(
-    () => import("../components/TemperatureChart/TemperatureChartClient"),
+    () => import("./TemperatureChart/TemperatureChartClient"),
     {
       ssr: false,
       loading: () => <Skeleton />,
     }
   ),
   RoomSelect: dynamic(
-    () => import("../components/TemperatureChart/RoomSelect/RoomSelect"),
+    () => import("./TemperatureChart/RoomSelect/RoomSelect"),
     {
       ssr: false,
       loading: () => <Skeleton />,
     }
   ),
-  RadarChart: dynamic(
-    () => import("../components/RadarChart/RadarChartClient"),
-    {
-      ssr: false,
-      loading: () => <Skeleton />,
-    }
-  ),
+  RadarChart: dynamic(() => import("./RadarChart/RadarChartClient"), {
+    ssr: false,
+    loading: () => <Skeleton />,
+  }),
 } as const;
 
 type ComponentName = keyof typeof componentMap;

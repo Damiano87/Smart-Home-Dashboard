@@ -3,10 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.scss";
 import styles from "./page.module.scss";
-import { AuthProvider } from "./components/AuthProvider";
-import Navbar from "./components/Navbar/Navbar";
+import { AuthProvider } from "./_components/AuthProvider";
+import Navbar from "./_components/Navbar/Navbar";
 import { Suspense } from "react";
-import Skeleton from "./components/Skeleton/Skeleton";
+import Skeleton from "./_components/Skeleton/Skeleton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
