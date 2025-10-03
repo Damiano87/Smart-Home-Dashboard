@@ -26,8 +26,6 @@ const Page = async ({
 }) => {
   const session = await auth();
 
-  console.log("Session. Main component", session?.user);
-
   if (!session?.user) redirect("/sign-in");
 
   // get search params for select
