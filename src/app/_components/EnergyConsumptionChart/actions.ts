@@ -18,12 +18,6 @@ export async function getEnergyConsumptionData() {
       orderBy: {
         timestamp: "asc",
       },
-      // optional
-      // where: {
-      //   timestamp: {
-      //     gte: new Date(Date.now() - 24 * 60 * 60 * 1000) // last 24h
-      //   }
-      // }
     });
 
     // group data by hours and rooms
