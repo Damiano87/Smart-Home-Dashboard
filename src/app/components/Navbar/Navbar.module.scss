@@ -2,7 +2,7 @@
 
 .navbar {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
   width: 100vw;
@@ -39,21 +39,35 @@
   }
 
   &:hover {
-    // background-color: vars.$logout-bg-hover;
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(vars.$logout-bg, 0.3);
   }
 
   &:active {
-    // background-color: vars.$logout-bg-active;
     transform: translateY(0);
     box-shadow: 0 2px 6px rgba(vars.$logout-bg, 0.4);
   }
 
   &:disabled {
-    // background-color: lighten(vars.$logout-bg, 30%);
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
   }
+}
+
+.avatarWrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }

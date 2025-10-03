@@ -268,6 +268,26 @@
   font-weight: 500;
 }
 
+.changeTargetContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.targetTempBtn {
+  display: flex;
+  align-items: center;
+  background-color: vars.$widget-bg;
+  border: solid vars.$widget-title-bg;
+  border-radius: 0.2rem;
+  padding: 0.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(0.9);
+  }
+}
+
 // Responsive design
 @media (max-width: 768px) {
   .acHeader {
@@ -294,22 +314,8 @@
   }
 }
 
-.changeTargetContainer {
-  display: flex;
-  gap: 1rem;
-}
-
-.targetTempBtn {
-  display: flex;
-  align-items: center;
-  background-color: vars.$widget-bg;
-  border: solid vars.$widget-title-bg;
-  border-radius: 0.2rem;
-  padding: 0.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-
-  &:hover {
-    transform: scale(0.9);
+@media (min-width: 768px) {
+  .tempDisplay {
+    flex-direction: row;
   }
 }

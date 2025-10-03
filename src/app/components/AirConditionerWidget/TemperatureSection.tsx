@@ -25,31 +25,32 @@ const TemperatureSection = ({ ac }: { ac: AirConditionerData }) => {
           <span className={styles.tempValue}>{optimisticTemp}°C</span>
           <span className={styles.tempLabel}>target</span>
         </div>
-        <ChangeTargetTempBtns
-          acId={ac.id}
-          setOptimisticTemp={setOptimisticTemp}
-          optimisticTemp={optimisticTemp}
-        />
-      </div>
-
-      <div className={styles.tempDiff}>
-        <div
-          className={`${styles.diffIndicator} ${
-            ac.temperatureDiff <= 1
-              ? styles.diffGood
-              : ac.temperatureDiff <= 3
-              ? styles.diffMedium
-              : styles.diffHigh
-          }`}
-        >
-          {ac.temperatureDiff > 0 ? (
-            <div className={styles.flex}>
-              <span>±</span>
-              <span>{`${ac.temperatureDiff.toFixed(1)}°C`}</span>
+        <div className={styles.flex}>
+          <ChangeTargetTempBtns
+            acId={ac.id}
+            setOptimisticTemp={setOptimisticTemp}
+            optimisticTemp={optimisticTemp}
+          />
+          <div className={styles.tempDiff}>
+            <div
+              className={`${styles.diffIndicator} ${
+                ac.temperatureDiff <= 1
+                  ? styles.diffGood
+                  : ac.temperatureDiff <= 3
+                  ? styles.diffMedium
+                  : styles.diffHigh
+              }`}
+            >
+              {ac.temperatureDiff > 0 ? (
+                <div className={styles.flex}>
+                  <span>±</span>
+                  <span>{`${ac.temperatureDiff.toFixed(1)}°C`}</span>
+                </div>
+              ) : (
+                "OK"
+              )}
             </div>
-          ) : (
-            "OK"
-          )}
+          </div>
         </div>
       </div>
     </div>
