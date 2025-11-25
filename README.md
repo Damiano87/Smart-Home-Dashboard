@@ -27,7 +27,7 @@ Smart Home Dashboard is a centralized control system for managing various aspect
 ## 🎯 Running the Application
 
 ### Login Info
-Email: sobe66@gmail.com
+Email: sobe66@gmail.com  
 Password: dashboard
 
 ### Development Mode
