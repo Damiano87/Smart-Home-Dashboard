@@ -16,17 +16,15 @@ import AirQualityWidget from "./_components/AirQualityWidget/AirQualityWidget";
 import SecurityStatusWidget from "./_components/SecurityStatusWidget/SecurityStatusWidget";
 import AirConditionersWidget from "./_components/AirConditionerWidget/AirConditionerWidget";
 import { LightControlWidget } from "./_components/LightControlWidget/LightControlWidget";
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 
 const Page = async ({
   searchParams,
 }: {
   searchParams?: Promise<{ room?: RoomType }>;
 }) => {
-  const session = await auth();
+  // const session = await auth();
 
-  if (!session?.user) redirect("/sign-in");
+  // if (!session?.user) redirect("/sign-in");
 
   // get search params for select
   const resolvedSearchParams = await searchParams;
